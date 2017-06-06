@@ -1,0 +1,49 @@
+<template name="formsection">
+  <div class="section active" id="titleSection" data-anchor="titlePage" style="background: #53B0D4;">
+    <div class="input-group">
+        <div class="food-line">
+            <h1>I want to have some...</h1>
+            <form style="position: relative; overflow: visible;">
+                <div class="mdl-selectfield mdl-js-selectfield widefield">
+                    <select class="mdl-selectfield__select" id="category" required tabindex="1">
+                        <option value="Food" selected>Any</option>
+                        <option value="Fastfood">Fast Food</option>
+                        <option value="Cafe">Cafe</option>
+                        <option value="Teahouse">Teahouse</option>
+                        <option value="Buffet">Buffet</option>
+                        <option value="Grill">Grill</option>
+                        <option value="Barbecue">Barbecue</option>
+                        <option value="Steakhouse">Steakhouse</option>
+                        <option value="Noodlehouse">Noodlehouse</option>
+                        <option value="Pub">Pub/Bar</option>
+                        <option value="Dimsum">Dimsum</option>
+                        <option value="Curry">Curry</option>
+                        <option value="Sushi">Sushi</option>
+                        <option value="Pizza">Pizza</option>
+                        <option value="Pasta">Pasta</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="distance-line">
+            <h1>...up to</h1>
+            <div class="mdl-selectfield mdl-js-selectfield">
+                <select class="mdl-selectfield__select" id="distance" required tabindex="2">
+                    <option value="1" selected>One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                    <option value="4">Four</option>
+                    <option value="5">Five</option>
+                </select>
+            </div>
+            <h1>mile/s from here.</h1>
+        </div>
+    </div>
+    <form action="#mapPage">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored launchButton"
+                onclick="search()" tabindex="2">
+            GO!
+        </button>
+    </form>
+  </div>
+</template>
