@@ -8,6 +8,7 @@ var circle;
 var infoWindow;
 var markers = [];
 
+//Initialize the Map and ask for current location
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: -34.397, lng: 150.644 },
@@ -56,32 +57,7 @@ function initMap() {
     }
 }
 
-function updateDistance(val) {
-    document.querySelector('#distanceOutput').value = val;
-
-    circle.setRadius(val * 1609.34);
-
-    if (val > 6)
-        map.setZoom(12);
-    else if (6 >= val && val > 3)
-        map.setZoom(13);
-    else if (3 >= val && val >= 1)
-        map.setZoom(15);
-    else
-        map.setZoom(15);
-}
-
-function updatePrice(val) {
-    var output = "";
-
-    for (var i = 0; i < val; i++) {
-        output += "$";
-    }
-
-    document.querySelector('#priceOutput').value = output;
-}
-
-
+//Search with given parameters
 function search() {
     if (navigator.geolocation) {
         clearMarker();
@@ -96,8 +72,6 @@ function search() {
             var category = document.getElementById('category');
             var region = document.getElementById('region');
 
-            circle.setRadius(distance * 1609.34);
-
             var request = {
                 location: pos,
                 radius: distance * 1609.34,
@@ -109,6 +83,7 @@ function search() {
                 rankBy: google.maps.places.RankBy.PROMINENCE
             };
 
+            circle.setRadius(distance * 1609.34);
             service.nearbySearch(request, callback);
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -116,23 +91,18 @@ function search() {
     }
 }
 
+//Remove previous markers from Map
 function clearMarker() {
     if (markers.length > 0) {
-        for (var i = 0; i < markers.length; i++) {
+        for (var i = 0; i < markers.length; i++)
             this.markers[i].setMap(null);
-        }
 
         this.markers = new Array();
         infoWindow.setMap(null);
     }
 }
 
-function callback(results, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-        createMarker(results[Math.floor(Math.random() * results.length)]);
-    }
-}
-
+//Draw the circle
 function getCircle(magnitude) {
     return {
         path: google.maps.SymbolPath.CIRCLE,
@@ -144,6 +114,7 @@ function getCircle(magnitude) {
     };
 }
 
+//Place marker on Map
 function createMarker(place) {
     if (place.reference == null)
         return;
@@ -164,39 +135,43 @@ function createMarker(place) {
             });
             this.markers.push(marker);
 
-            var title = document.getElementById('resTitle');
-            title.innerText = place.name;
-
-            var address = document.getElementById('resAddr');
-            address.innerText = place.vicinity;
-
-            var img = document.getElementById('resImg');
-
-            if (place.photos != null) {
-                img.innerHTML = "<img src=\"" + place.photos[0].getUrl({ 'maxWidth': 400, 'maxHeight': 300 }) + "\"></img>";
-            }
-
-            var phone = document.getElementById('resPhone');
-            phone.innerText = (details.formatted_phone_number || "None");
-
-            var website = document.getElementById('resWebsite');
-            website.innerHTML = "<a href=\"" + (details.website || "None") + "\"\>Go to Website >></a>";
-
-            var price = document.getElementById('resPrice');
-            price.innerText = "";
-            if (place.price_level != NaN && place.price_level >= 0) {
-                for (var i = 0; i < place.price_level * 1; i++)
-                    price.innerText += "$";
-            }
-
-            var rating = document.getElementById('resRating');
-            rating.innerHTML = place.rating + " &#9733;";
+            populateData(place, details);
 
             calculateAndDisplayRoute(marker.getPosition());
         }
     });
 }
 
+//Display result data
+function populateData(place, details) {
+  //Initialize info objects
+  var title = document.getElementById('resTitle');
+  var address = document.getElementById('resAddr');
+  var img = document.getElementById('resImg');
+  var phone = document.getElementById('resPhone');
+  var website = document.getElementById('resWebsite');
+  var price = document.getElementById('resPrice');
+  var rating = document.getElementById('resRating');
+
+  title.innerText = place.name;
+  address.innerText = place.vicinity;
+  rating.innerHTML = place.rating + " &#9733;";
+  phone.innerText = (details.formatted_phone_number || "None");
+  website.innerHTML = "<a href=\"" + (details.website || "#") + "\"\>Go to Website >></a>";
+
+  if (place.photos != null) {
+      img.innerHTML = "<img src=\"" + (place.photos ?
+        place.photos[0].getUrl({ 'maxWidth': 400, 'maxHeight': 300 }) : "#") + "\"></img>";
+  }
+
+  price.innerText = "";
+  if (place.price_level != NaN && place.price_level >= 0) {
+      for (var i = 0; i < place.price_level * 1; i++)
+          price.innerText += "$";
+  }
+}
+
+//Display the driving route
 function calculateAndDisplayRoute(dest) {
     directionsService.route({
         origin: currentPos,
@@ -212,6 +187,13 @@ function calculateAndDisplayRoute(dest) {
     });
 }
 
+//Callback function, gets random location result
+function callback(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK)
+        createMarker(results[Math.floor(Math.random() * results.length)]);
+}
+
+//Alert user for location error
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
     infoWindow.setContent(browserHasGeolocation ?
