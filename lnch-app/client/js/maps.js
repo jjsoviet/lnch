@@ -1,3 +1,4 @@
+//Initialize variables
 var map;
 var directionsService;
 var directionsDisplay;
