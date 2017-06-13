@@ -1,19 +1,18 @@
-<template name="apisection">
+<template name="scriptsection">
   <!--Google Maps API-->
-  <script type="text/javascript" async defer src="js/maps.js"></script>
+  <script async defer src="../js/maps.js"></script>
   <script async defer
           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo&libraries=places&callback=initMap">
   </script>
 
   <!--Fullpage-->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.4/jquery.fullpage.js"></script>
-
   <script type="text/javascript">
   $(document).ready(function() {
       $('#fullpage').fullpage({
           anchors: ['titlePage', 'mapPage'],
           navigation: true,
-              navigationPosition: 'right'
+          navigationPosition: 'right'
       });
   });
   </script>
