@@ -5,32 +5,22 @@
         <h1>I want to have some</h1>
         <form style="position: relative; overflow: visible;">
           <select class="select-box" id="category" required tabindex="1" onchange="changeItem(this)">
-              <option value="Food" selected>Food</option>
-              <option value="Fastfood">Fast Food</option>
-              <option value="Cafe">Cafe</option>
-              <option value="Teahouse">Teahouse</option>
-              <option value="Buffet">Buffet</option>
-              <option value="Grill">Grill</option>
-              <option value="Barbecue">Barbecue</option>
-              <option value="Steakhouse">Steakhouse</option>
-              <option value="Noodlehouse">Noodlehouse</option>
-              <option value="Pub">Pub/Bar</option>
-              <option value="Dimsum">Dimsum</option>
-              <option value="Curry">Curry</option>
-              <option value="Sushi">Sushi</option>
-              <option value="Pizza">Pizza</option>
-              <option value="Pasta">Pasta</option>
+              {{#each foodChoices}}
+                <option value={{choice}}>
+                  {{choice}}
+                </option>
+              {{/each}}
           </select>
         </form>
       </div>
       <div class="row inline-row">
         <h1>up to</h1>
         <select class="select-box" id="distance" required tabindex="2">
-            <option value="1" selected>One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-            <option value="4">Four</option>
-            <option value="5">Five</option>
+          {{#each distances}}
+            <option value={{distance}}>
+              {{title}}
+            </option>
+          {{/each}}
         </select>
         <h1>mile/s from here.</h1>
         <form action="#mapPage">

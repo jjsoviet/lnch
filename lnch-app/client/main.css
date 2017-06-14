@@ -1,1 +1,157 @@
-/* CSS declarations go here */
+/*Globals*/
+.row.inline-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+
+/*Form Styles*/
+#titleSection {
+  background-image: url('http://www.foodanddine.com/wp-content/uploads/2016/05/Pizza-capricciosa.jpg');
+  background-color: rgba(0, 0, 0, 0.6);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+  color: rgb(255, 255, 255);
+  -webkit-transition: background-image 1s linear;
+  -moz-transition: background-image 1s linear;
+  -o-transition: background-image 1s linear;
+  -ms-transition: background-image 1s linear;
+  transition: background-image 1s linear;
+}
+
+.input-group {
+    position: absolute;
+    top: 30vh;
+    left: 5vw;
+}
+
+.input-group h1, .select-box {
+    font-family: 'Heebo', sans-serif;
+    font-weight: 100;
+    font-size: 5vw;
+    line-height: 3vw;
+}
+
+.input-group .food-line,.input-group .distance-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+.select-box {
+    color: rgb(255, 255, 255);
+    background: rgba(0,0,0,0);
+    border: 0px;
+    margin: 0px 2vw;
+}
+
+.select-box option {
+  color: rgb(0,0,0);
+  font-size: 1.8vw;
+}
+
+.launch-button {
+  font-family: 'Heebo', sans-serif;
+  font-weight: 100;
+  color: rgb(255, 255, 255);
+  background: rgba(0,0,0,0);
+  border: 0px;
+  font-size: 5vw;
+  margin-left: 20px;
+}
+
+.title-name {
+  font-family: 'Heebo', sans-serif;
+  font-weight: 100;
+  position: absolute;
+  bottom: 2vh;
+  left: 2vw;
+  font-size: 2vw;
+}
+
+/*Map View Styles*/
+.map-view {
+  position: absolute;
+  width: 80vw;
+  height: 100vh;
+  left: 20vw;
+  top: 0px;
+}
+
+.info-bar {
+  font-family: 'Heebo', sans-serif;
+  font-weight: 100;
+  font-size: 1.4vw;
+  position: absolute;
+  background: rgb(50,50,50);
+  color: rgb(255,255,255);
+  bottom: 0px;
+  width: 20vw;
+  height: 100vh;
+  left: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.info-segment {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.info-segment i {
+  margin-right: 10px;
+}
+
+.info-segment a {
+  text-decoration: none;
+  color: rgb(255,255,255);
+}
+
+.icon-segment {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.icon-segment span {
+  margin-right: 10px;
+}
+
+.title-bar {
+  margin: 20px;
+}
+
+.image-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0;
+}
+
+.image-bar img {
+  object-fit: cover;
+  width: 20vw !important;
+  height: auto !important;
+}
+
+.reroll-button {
+  font-family: 'Heebo', sans-serif;
+  font-weight: 100;
+  position: absolute;
+  bottom: 1vh;
+  left: 0.5vw;
+  color: rgb(255, 255, 255);
+  background: rgba(0,0,0,0);
+  border: 0px;
+  font-size: 2vw;
+  margin-left: 10px;
+}
