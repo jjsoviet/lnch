@@ -17,9 +17,7 @@
           crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/jquery.fullpage/2.9.4/jquery.fullpage.min.js"></script>
   <script src="https://cdn.jsdelivr.net/jquery.fullpage/2.9.4/jquery.fullpage.extensions.min.js"></script>
-  <script async defer
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo&libraries=places&callback=initMap"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.4/jquery.fullpage.js"></script>
+
 </head>
 
 <body>
@@ -28,7 +26,10 @@
     {{> mapsection}}
   </div>
 
-  {{> scriptsection}}
+  <script type="text/javascript" async defer src="/js/maps-api.js"></script>
+  <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo&libraries=places&callback=initMap"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.4/jquery.fullpage.js"></script>
   <script type="text/javascript">
   $(document).ready(function() {
       $('#fullpage').fullpage({
