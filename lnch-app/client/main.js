@@ -21,5 +21,4 @@ if (Meteor.isClient) {
       { distance: 5, title: "Five" }
     ]
   });
-
 }
