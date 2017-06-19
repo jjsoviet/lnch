@@ -156,7 +156,14 @@ function populateData(place, details) {
 
   title.innerText = place.name;
   address.innerText = place.vicinity;
-  rating.innerHTML = place.rating + " &#9733;";
+
+  if (typeof place.rating != 'undefined') {
+    console.log(place.rating);
+    rating.innerHTML = place.rating + " &#9733;";
+  } else {
+    rating.innerHTML = "";
+  }
+
   phone.innerText = (details.formatted_phone_number || "None");
   website.innerHTML = "<a href=\"" + (details.website || "#") + "\"\>Go to Website >></a>";
 

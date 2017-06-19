@@ -8,6 +8,7 @@ if (Meteor.isClient) {
   Template.formsection.helpers({
     foodChoices: [
       { choice: "Barbecue" },
+      { choice: "Dimsum" },
       { choice: "Pizza" },
       { choice: "Sushi" },
       { choice: "Steak" }

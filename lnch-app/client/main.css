@@ -9,11 +9,12 @@
 /*Form Styles*/
 #titleSection {
   background-image: url('/img/bbq-bg.jpg');
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0,0,0, 0.6);
+  background-blend-mode: multiply;
   background-size: cover;
   background-repeat: no-repeat;
-  background-blend-mode: multiply;
   color: rgb(255, 255, 255);
+  opacity: 1;
   -webkit-transition: background-image 1s linear;
   -moz-transition: background-image 1s linear;
   -o-transition: background-image 1s linear;
@@ -76,21 +77,21 @@
 /*Map View Styles*/
 .map-view {
   position: absolute;
-  width: 80vw;
+  width: 85vw;
   height: 100vh;
-  left: 20vw;
+  left: 15vw;
   top: 0px;
 }
 
 .info-bar {
   font-family: 'Heebo', sans-serif;
   font-weight: 100;
-  font-size: 1.4vw;
+  font-size: 1.3vw;
   position: absolute;
-  background: rgb(50,50,50);
+  background: linear-gradient(-45deg, rgb(56,4,67), rgb(8,1,22));
   color: rgb(255,255,255);
   bottom: 0px;
-  width: 20vw;
+  width: 15vw;
   height: 100vh;
   left: 0px;
   display: flex;
@@ -139,8 +140,8 @@
 
 .image-bar img {
   object-fit: cover;
-  width: 20vw !important;
-  height: auto !important;
+  width: 25vw !important;
+  height: 30vh !important;
 }
 
 .reroll-button {
