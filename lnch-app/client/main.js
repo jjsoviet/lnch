@@ -2,8 +2,6 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
-<<<<<<< HEAD
-=======
 
 if (Meteor.isClient) {
 
@@ -25,4 +23,3 @@ if (Meteor.isClient) {
     ]
   });
 }
->>>>>>> UI-Branch
