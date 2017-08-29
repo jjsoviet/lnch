@@ -1,38 +1,31 @@
 <template name="mapsection">
   <div class="section" id="mapSection" data-anchor="mapPage">
-      <!--Map-->
-      <div id="map" style="width: 100vw; height: 100vh;"></div>
+    <!--Map-->
+    <div id="map" class="map-view"></div>
 
-      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored rerollButton"
-              onclick="search()" tabindex="2">
-          Reroll!
-      </button>
-
-      <!--Info Card-->
-      <div class="mdl-card infocard">
-          <div class="mdl-card__title">
-              <h3 id="resTitle"></h3>
-          </div>
-          <div class="mdl-card__media" id="resImg">
-
-          </div>
-          <div class="mdl-card__supporting-text">
-              <p id="resAddr"></p>
-              <br />
-              <div class="infobar">
-                  <div class="infoSegment">
-                      <i class="material-icons">local_phone</i><span id="resPhone"></span>
-                  </div>
-                  <div class="infoSegment">
-                      <i class="material-icons">language</i><span id="resWebsite"></span>
-                  </div>
-              </div>
-              <br />
-              <div class="infobar">
-                  <span id="resRating"></span>
-                  <span id="resPrice"></span>
-              </div>
-          </div>
+    <!--Info Bar-->
+    <div class="info-bar">
+      <div class="image-bar" id="resImg"></div>
+      <div class="title-bar">
+        <h3 id="resTitle"></h3>
+        <p id="resAddr"></p>
+        <div class="info-segment">
+            <i class="material-icons">local_phone</i><span id="resPhone"></span>
+        </div>
+        <div class="info-segment">
+            <i class="material-icons">language</i><span id="resWebsite"></span>
+        </div>
+        <br />
+        <div class="icon-segment">
+            <span id="resRating"></span>
+            <span id="resPrice"></span>
+        </div>
       </div>
+      <br />
+    </div>
+
+    <button class="reroll-button" onclick="search()" tabindex="2">
+        Reroll
+    </button>
   </div>
 </template>
