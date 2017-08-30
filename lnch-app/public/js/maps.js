@@ -73,12 +73,12 @@ function search() {
             var category = document.getElementById('category');
             var region = document.getElementById('region');
 
+            //Build the Place Search request
             var request = {
                 location: pos,
                 radius: distance * 1609.34,
-                type: ['restaurant', 'eatery', 'food'],
-                name: [category.options[category.selectedIndex].value],
-                keyword: [category.options[category.selectedIndex].value],
+                type: 'restaurant',
+                keyword: [category.options[category.selectedIndex].value, 'restaurant', 'eatery'],
                 minprice: 0,
                 maxprice: 4,
                 rankBy: google.maps.places.RankBy.PROMINENCE
@@ -167,8 +167,16 @@ function populateData(place, details) {
     title.innerText = place.name;
     address.innerText = place.vicinity;
     rating.innerHTML = place.rating + " <span>&#9733;</span>";
-    phone.innerText = (details.formatted_phone_number || "None");
-    website.innerHTML = "<a href=\"" + (details.website || "#") + "\"\>Go to Website <i class='material-icons'>keyboard_arrow_right</i></a>";
+
+    if (details.formatted_phone_number)
+      phone.innerHTML = "<a href=\"tel:" + details.formatted_phone_number + "\"\>" + details.formatted_phone_number;
+    else
+      phone.innerText = "Phone Unavailable";
+
+    if (details.website)
+      website.innerHTML = "<a target=\"_blank\" href=\"" + details.website + "\"\>Go to Website <i class='material-icons'>keyboard_arrow_right</i></a>";
+    else
+      website.innerText = "Website Unavailable";
 
     $('#infobar').css('opacity', '1');
     $('.slide-info').css('margin-left', '0');

@@ -4,9 +4,9 @@
       <div class="row inline-row">
         <h1>I want to have some</h1>
         <form style="position: relative; overflow: visible;">
-          <select class="select-box" id="category" required tabindex="1" onchange="changeItem(this)">
+          <select class="select-box" id="category" required tabindex="1">
               {{#each foodChoices}}
-                <option value={{choice}}>
+                <option value={{terms}}>
                   {{choice}}
                 </option>
               {{/each}}
@@ -35,20 +35,4 @@
       LNCH
     </div>
   </div>
-
-  <script>
-    function changeItem(selection) {
-      var section = document.getElementById('titleSection');
-      var value = selection.value;
-      if (value == "Sushi") {
-        section.style.backgroundImage = "url('/img/sushi-bg.jpeg')";
-      } else if (value == "Pizza") {
-        section.style.backgroundImage = "url('/img/pizza-bg.jpg')";
-      } else if (value == "Steak") {
-        section.style.backgroundImage = "url('/img/steak-bg.jpg')";
-      } else if (value == "Dimsum") {
-        section.style.backgroundImage = "url('/img/dimsum-bg.jpg')";
-      }
-    }
-  </script>
 </template>

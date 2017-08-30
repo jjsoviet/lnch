@@ -11,7 +11,7 @@
 
 /*Form Styles*/
 #titleSection {
-  background-image: url('/img/bbq-bg.jpg');
+  background-image: url('/img/Barbecue.jpg');
   background-color: rgba(0,0,0, 0.2);
   background-blend-mode: darken;
   background-size: cover;
@@ -19,11 +19,11 @@
   background-repeat: no-repeat;
   color: rgb(255, 255, 255);
   opacity: 1;
-  -webkit-transition: background-image 1s linear;
-  -moz-transition: background-image 1s linear;
-  -o-transition: background-image 1s linear;
-  -ms-transition: background-image 1s linear;
-  transition: background-image 1s linear;
+  -webkit-transition: background-image 600ms ease-in-out;
+  -moz-transition: background-image 600ms ease-in-out;
+  -o-transition: background-image 600ms ease-in-out;
+  -ms-transition: background-image 600ms ease-in-out;
+  transition: background-image 600ms ease-in-out;
 }
 
 .input-group {
