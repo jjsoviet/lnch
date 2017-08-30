@@ -4,14 +4,18 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: baseline;
+  background: rgba(0,0,0,1);
+  margin: 5vh 0;
+  padding: 1vh 2vw;
 }
 
 /*Form Styles*/
 #titleSection {
   background-image: url('/img/bbq-bg.jpg');
-  background-color: rgba(0,0,0, 0.6);
-  background-blend-mode: multiply;
+  background-color: rgba(0,0,0, 0.2);
+  background-blend-mode: darken;
   background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   color: rgb(255, 255, 255);
   opacity: 1;
@@ -24,15 +28,15 @@
 
 .input-group {
     position: absolute;
-    top: 30vh;
-    left: 5vw;
+    bottom: 0;
+    left: 0;
 }
 
 .input-group h1, .select-box {
-    font-family: 'Heebo', sans-serif;
-    font-weight: 100;
+    font-family: 'Teko', sans-serif;
+    font-weight: 300;
     font-size: 5vw;
-    line-height: 3vw;
+    line-height: 0;
 }
 
 .input-group .food-line,.input-group .distance-line {
@@ -44,19 +48,19 @@
 }
 
 .select-box {
-    color: rgb(255, 255, 255);
-    background: rgba(0,0,0,0);
+    color: rgb(255, 151, 13);
+    background: rgba(0,0,0,1);
     border: 0px;
     margin: 0px 2vw;
 }
 
 .select-box option {
-  color: rgb(0,0,0);
-  font-size: 1.8vw;
+  color: rgb(255, 151, 13);
+  font-size: 2vw;
 }
 
 .launch-button {
-  font-family: 'Heebo', sans-serif;
+  font-family: 'Teko', sans-serif;
   font-weight: 100;
   color: rgb(255, 255, 255);
   background: rgba(0,0,0,0);
@@ -65,55 +69,105 @@
   margin-left: 20px;
 }
 
+.launch-button i {
+  font-size: 5vw;
+  vertical-align: middle;
+  color: rgb(255, 151, 13);
+}
+
 .title-name {
-  font-family: 'Heebo', sans-serif;
+  font-family: 'Teko', sans-serif;
   font-weight: 100;
   position: absolute;
   bottom: 2vh;
-  left: 2vw;
+  right: 2vw;
   font-size: 2vw;
 }
 
 /*Map View Styles*/
 .map-view {
   position: absolute;
-  width: 85vw;
+  width: 100vw;
   height: 100vh;
-  left: 15vw;
-  top: 0px;
+  left: 0;
+  top: 0;
 }
 
 .info-bar {
-  font-family: 'Heebo', sans-serif;
-  font-weight: 100;
-  font-size: 1.3vw;
-  position: absolute;
-  background: linear-gradient(-45deg, rgb(56,4,67), rgb(8,1,22));
+  font-family: 'Teko', sans-serif;
+  font-weight: 300;
+  font-size: 1.4vw;
+  background: rgba(0,0,0,0);
   color: rgb(255,255,255);
-  bottom: 0px;
-  width: 15vw;
-  height: 100vh;
-  left: 0px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+  -webkit-transition: opacity 500ms ease-in-out;
+}
+
+.info-segment, .reroll-button {
+  background: rgba(0,0,0,1);
+  padding: 1vh 1vw;
+}
+
+.info-segment {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
 }
 
-.info-segment {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
+.info-segment i {
+  color: rgb(255, 151, 13);
+  margin-right: 10px;
+  font-size: 1.4vw;
 }
 
-.info-segment i {
-  margin-right: 10px;
+.info-segment a i {
+  vertical-align: middle;
 }
 
 .info-segment a {
   text-decoration: none;
   color: rgb(255,255,255);
+}
+
+.info-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+}
+
+.slide-info {
+  margin-left: -30vw;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  -webkit-transition: margin-left 200ms ease-in-out;
+  transition: margin-left 200ms ease-in-out;
+}
+
+.info-line h3, .info-line p {
+  padding: 1vh 1vw;
+}
+
+.info-line h3 {
+  color: rgba(0,0,0,1);
+  background: rgb(255, 151, 13);
+  font-size: 2.4vw;
+  margin-bottom: 0;
+}
+
+.info-line p {
+  background: rgba(0,0,0,1);
 }
 
 .icon-segment {
@@ -127,32 +181,22 @@
   margin-right: 10px;
 }
 
-.title-bar {
-  margin: 20px;
-}
-
-.image-bar {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: 0;
-}
-
-.image-bar img {
-  object-fit: cover;
-  width: 25vw !important;
-  height: 30vh !important;
+.icon-segment #resRating span, .icon-segment #resPrice {
+  color: rgb(255, 151, 13);
 }
 
 .reroll-button {
-  font-family: 'Heebo', sans-serif;
-  font-weight: 100;
   position: absolute;
-  bottom: 1vh;
-  left: 0.5vw;
-  color: rgb(255, 255, 255);
-  background: rgba(0,0,0,0);
-  border: 0px;
+  right: 0;
+  bottom: 0;
+  font-family: 'Teko', sans-serif;
+  font-weight: 100;
   font-size: 2vw;
-  margin-left: 10px;
+  color: rgb(255, 151, 13);
+  border: 0;
+  margin: 0;
+}
+
+.reroll-button:hover {
+  cursor: pointer;
 }

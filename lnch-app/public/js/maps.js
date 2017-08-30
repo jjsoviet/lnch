@@ -23,10 +23,10 @@ function initMap() {
     service = new google.maps.places.PlacesService(map);
     infoWindow = new google.maps.InfoWindow;
     circle = new google.maps.Circle({
-        strokeColor: '#FF795D',
-        strokeOpacity: 0.4,
-        strokeWeight: 3,
-        fillColor: '#FFFFFF',
+        strokeColor: '#FF970D',
+        strokeOpacity: 0.8,
+        strokeWeight: 5,
+        fillColor: '#FFF',
         fillOpacity: 0.5
     });
 
@@ -43,9 +43,9 @@ function initMap() {
             currentPos = pos;
             var distance = document.getElementById('distance').value;
 
-            map.setCenter(pos);
+            map.setCenter(new google.maps.LatLng(currentPos));
             circle.setMap(map);
-            circle.setCenter(pos);
+            circle.setCenter(currentPos);
             circle.setRadius(distance * 1609.34);
 
             infoWindow = new google.maps.InfoWindow;
@@ -145,25 +145,35 @@ function createMarker(place) {
 
 //Display result data
 function populateData(place, details) {
+  $('.slide-info').css('margin-left', '-30vw');
+
   //Initialize info objects
   var title = document.getElementById('resTitle');
   var address = document.getElementById('resAddr');
-  var img = document.getElementById('resImg');
   var phone = document.getElementById('resPhone');
   var website = document.getElementById('resWebsite');
   var price = document.getElementById('resPrice');
   var rating = document.getElementById('resRating');
 
-  title.innerText = place.name;
-  address.innerText = place.vicinity;
-  rating.innerHTML = place.rating + " &#9733;";
-  phone.innerText = (details.formatted_phone_number || "None");
-  website.innerHTML = "<a href=\"" + (details.website || "#") + "\"\>Go to Website >></a>";
+  setTimeout(function() {
+    title.innerText = "";
+    address.innerText = "";
+    rating.innerHTML = "";
+    phone.innerText = "";
+    website.innerHTML = "";
+  }, 100)
 
-  if (place.photos != null) {
-      img.innerHTML = "<img src=\"" + (place.photos ?
-        place.photos[0].getUrl({ 'maxWidth': 400, 'maxHeight': 300 }) : "#") + "\"></img>";
-  }
+  setTimeout(function() {
+    title.innerText = place.name;
+    address.innerText = place.vicinity;
+    rating.innerHTML = place.rating + " <span>&#9733;</span>";
+    phone.innerText = (details.formatted_phone_number || "None");
+    website.innerHTML = "<a href=\"" + (details.website || "#") + "\"\>Go to Website <i class='material-icons'>keyboard_arrow_right</i></a>";
+
+    $('#infobar').css('opacity', '1');
+    $('.slide-info').css('margin-left', '0');
+  }, 600);
+
 
   price.innerText = "";
   if (place.price_level != NaN && place.price_level >= 0) {

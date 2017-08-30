@@ -4,26 +4,28 @@
     <div id="map" class="map-view"></div>
 
     <!--Info Bar-->
-    <div class="info-bar">
-      <div class="image-bar" id="resImg"></div>
+    <div class="info-bar" id="infobar">
       <div class="title-bar">
-        <h3 id="resTitle"></h3>
-        <p id="resAddr"></p>
-        <div class="info-segment">
-            <i class="material-icons">local_phone</i><span id="resPhone"></span>
+        <div class="info-line">
+          <h3 id="resTitle" class="slide-info"></h3>
         </div>
-        <div class="info-segment">
-            <i class="material-icons">language</i><span id="resWebsite"></span>
+        <div class="info-line">
+          <p id="resAddr" class="slide-info"></p>
         </div>
-        <br />
-        <div class="icon-segment">
-            <span id="resRating"></span>
-            <span id="resPrice"></span>
+        <div class="info-segment slide-info">
+          <div class="info-line">
+            <i class="material-icons slide-info">local_phone</i><span class="slide-info" id="resPhone"></span>
+          </div>
+          <div class="info-line">
+            <i class="material-icons slide-info">language</i><span class="slide-info" id="resWebsite"></span>
+          </div>
+          <div class="icon-segment slide-info">
+              <span id="resRating"></span>
+              <span id="resPrice"></span>
+          </div>
         </div>
       </div>
-      <br />
     </div>
-
     <button class="reroll-button" onclick="search()" tabindex="2">
         Reroll
     </button>
