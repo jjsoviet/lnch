@@ -23,10 +23,10 @@ Template.formsection.helpers({
 
   distances: [
     { distance: 1, title: "One" },
-    { distance: 2, title: "Two" },
     { distance: 3, title: "Three" },
-    { distance: 4, title: "Four" },
-    { distance: 5, title: "Five" }
+    { distance: 5, title: "Five" },
+    { distance: 10, title: "Ten" },
+    { distance: 20, title: "Twenty" }
   ]
 });
 

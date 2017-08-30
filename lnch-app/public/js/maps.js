@@ -6,6 +6,8 @@ var service;
 var currentPos;
 var currentDest;
 var circle;
+var startpin;
+var endpin;
 var infoWindow;
 var markers = [];
 
@@ -19,6 +21,11 @@ function initMap() {
     directionsService = new google.maps.DirectionsService;
     directionsDisplay = new google.maps.DirectionsRenderer;
     directionsDisplay.setMap(map);
+    directionsDisplay.setOptions( { suppressMarkers: true });
+
+    //Set custom markers
+    startpin = new google.maps.MarkerImage('/img/startpin.png');
+    endpin = new google.maps.MarkerImage('/img/endpin.png');
 
     service = new google.maps.places.PlacesService(map);
     infoWindow = new google.maps.InfoWindow;
@@ -117,7 +124,7 @@ function getCircle(magnitude) {
 
 //Place marker on Map
 function createMarker(place) {
-    if (place.reference == null)
+    if (place.reference == null || place == null)
         return;
 
     var request = { reference: place.reference };
@@ -129,16 +136,26 @@ function createMarker(place) {
 
     service.getDetails(request, function (details, status) {
         if (details) {
-            var marker = new google.maps.Marker({
+            //Draw the markers for start and end
+            var start = new google.maps.Marker({
                 map: map,
+                icon: startpin,
+                position: currentPos,
+                animation: google.maps.Animation.DROP
+            });
+
+            var end = new google.maps.Marker({
+                map: map,
+                icon: endpin,
                 position: place.geometry.location,
                 animation: google.maps.Animation.DROP
             });
-            this.markers.push(marker);
+            this.markers.push(start);
+            this.markers.push(end);
 
             populateData(place, details);
 
-            calculateAndDisplayRoute(marker.getPosition());
+            calculateAndDisplayRoute(place.geometry.location);
         }
     });
 }
@@ -165,7 +182,7 @@ function populateData(place, details) {
 
   setTimeout(function() {
     title.innerText = place.name;
-    address.innerText = place.vicinity;
+    address.innerText = details.formatted_address;
     rating.innerHTML = place.rating + " <span>&#9733;</span>";
 
     if (details.formatted_phone_number)
