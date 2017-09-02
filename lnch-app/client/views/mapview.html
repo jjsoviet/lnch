@@ -1,7 +1,9 @@
 <template name="mapsection">
   <div class="section" id="mapSection" data-anchor="mapPage">
     <!--Map-->
-    <div id="map" class="map-view"></div>
+    <div id="map" class="map-view">
+      {{> googleMap name="foodMap" options=mapOptions}}
+    </div>
 
     <!--Info Bar-->
     <div class="info-bar" id="infobar">
@@ -26,7 +28,7 @@
         </div>
       </div>
     </div>
-    <button class="reroll-button" onclick="search()" tabindex="2">
+    <button class="reroll-button" id="reroll" tabindex="2">
         Reroll
     </button>
   </div>

@@ -13,6 +13,7 @@
           </select>
         </form>
       </div>
+      <br />
       <div class="row inline-row">
         <h1>up to</h1>
         <select class="select-box" id="distance" required tabindex="2">
@@ -23,12 +24,9 @@
           {{/each}}
         </select>
         <h1>mile/s from here.</h1>
-        <form action="#mapPage">
-            <button class="launch-button"
-                    onclick="search()" tabindex="2">
-                <i class="material-icons">keyboard_arrow_right</i>
-            </button>
-        </form>
+        <a class="launch-button" href="#mapPage" id="launch" tabindex="2">
+            <i class="material-icons">keyboard_arrow_right</i>
+        </a>
       </div>
     </div>
     <div class="title-name">

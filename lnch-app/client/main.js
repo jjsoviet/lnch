@@ -1,7 +1,15 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-
+import './lib/maps.js';
 import './main.html';
+
+//API Key
+//AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo
+
+//Load Maps API
+Meteor.startup(function() {
+    GoogleMaps.load({ v: '3', key: 'AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo', libraries: 'geometry,places' });
+});
 
 //Template Helpers
 Template.formsection.helpers({
@@ -27,7 +35,11 @@ Template.formsection.helpers({
     { distance: 5, title: "Five" },
     { distance: 10, title: "Ten" },
     { distance: 20, title: "Twenty" }
-  ]
+  ],
+
+  search: function() {
+    search();
+  },
 });
 
 Template.formsection.events({
@@ -41,5 +53,32 @@ Template.formsection.events({
     section.style.backgroundImage = "url('/img/" + selection + ".jpg')";
 
     console.log(section);
+  },
+
+  "mousedown #launch": function(event, template){
+    Meteor.mapfunctions.search();
   }
-})
+});
+
+Template.mapsection.onCreated(function() {
+  GoogleMaps.ready('foodMap', function(map) {
+    Meteor.mapfunctions.initMap(GoogleMaps.maps.foodMap.instance);
+  })
+});
+
+Template.mapsection.helpers({
+  mapOptions: function() {
+    if (GoogleMaps.loaded()) {
+      return {
+        center: new google.maps.LatLng(-34.397, 150.644),
+        zoom: 15
+      };
+    }
+  }
+});
+
+Template.mapsection.events({
+  "mousedown #reroll": function(event, template){
+    Meteor.mapfunctions.search();
+  }
+});

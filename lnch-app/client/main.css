@@ -1,6 +1,6 @@
 /*Globals*/
 .row.inline-row {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: baseline;
@@ -35,7 +35,7 @@
 .input-group h1, .select-box {
     font-family: 'Teko', sans-serif;
     font-weight: 300;
-    font-size: 5vw;
+    font-size: 8em;
     line-height: 0;
 }
 
@@ -65,12 +65,12 @@
   color: rgb(255, 255, 255);
   background: rgba(0,0,0,0);
   border: 0px;
-  font-size: 5vw;
+  font-size: 8em;
   margin-left: 20px;
 }
 
 .launch-button i {
-  font-size: 5vw;
+  font-size: 1.2em;
   vertical-align: middle;
   color: rgb(255, 151, 13);
 }
@@ -81,7 +81,7 @@
   position: absolute;
   bottom: 2vh;
   right: 2vw;
-  font-size: 2vw;
+  font-size: 3em;
 }
 
 /*Map View Styles*/
@@ -96,7 +96,7 @@
 .info-bar {
   font-family: 'Teko', sans-serif;
   font-weight: 300;
-  font-size: 1.4vw;
+  font-size: 1.8em;
   background: rgba(0,0,0,0);
   color: rgb(255,255,255);
   position: absolute;
@@ -127,7 +127,7 @@
 .info-segment i {
   color: rgb(255, 151, 13);
   margin-right: 10px;
-  font-size: 1.4vw;
+  font-size: 1.2em;
 }
 
 .info-segment a i {
@@ -162,7 +162,7 @@
 .info-line h3 {
   color: rgba(0,0,0,1);
   background: rgb(255, 151, 13);
-  font-size: 2.4vw;
+  font-size: 1.8em;
   margin-bottom: 0;
 }
 
@@ -181,6 +181,10 @@
   margin-right: 10px;
 }
 
+.icon-segment #resRating, .icon-segment #resPrice {
+    font-size: 1.2em;
+}
+
 .icon-segment #resRating span, .icon-segment #resPrice {
   color: rgb(255, 151, 13);
 }
@@ -189,12 +193,12 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  font-family: 'Teko', sans-serif;
-  font-weight: 100;
-  font-size: 2vw;
-  color: rgb(255, 151, 13);
   border: 0;
   margin: 0;
+  font-family: 'Teko', sans-serif;
+  font-weight: 100;
+  font-size: 2.6em;
+  color: rgb(255, 151, 13);
 }
 
 .reroll-button:hover {
