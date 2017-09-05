@@ -56,11 +56,11 @@ Meteor.mapfunctions = {
 
             infoWindow = new google.maps.InfoWindow;
         }, function () {
-            Meteor.mapfunctions.handleLocationError(true, infoWindow, map.getCenter());
+            Meteor.mapfunctions.displayModal(true);
         });
     } else {
         // Browser doesn't support Geolocation
-        Meteor.mapfunctions.handleLocationError(false, infoWindow, map.getCenter());
+        Meteor.mapfunctions.displayModal(true);
     }
   },
 
@@ -93,7 +93,7 @@ Meteor.mapfunctions = {
             circle.setRadius(distance * 1609.34);
             service.nearbySearch(request, Meteor.mapfunctions.callback);
         }, function () {
-            Meteor.mapfunctions.handleLocationError(true, infoWindow, map.getCenter());
+            Meteor.mapfunctions.displayModal(true);
         });
     }
   },
@@ -231,15 +231,24 @@ Meteor.mapfunctions = {
   callback: function(results, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK)
           Meteor.mapfunctions.createMarker(results[Math.floor(Math.random() * results.length)]);
+      else
+          Meteor.mapfunctions.displayModal(false);
   },
 
-  //Alert user for location error
-  handleLocationError: function(browserHasGeolocation, infoWindow, pos) {
-      infoWindow.setPosition(pos);
-      infoWindow.setContent(browserHasGeolocation ?
-                            'Error: The Geolocation service failed.' :
-                            'Error: Your browser doesn\'t support geolocation.');
-      infoWindow.open(map);
+  //Display a modal on search/geolocation failure
+  displayModal: function(geoError) {
+    $('.slide-info').css('margin-left', '-30vw');
+    $('.slide-down-info').css('margin-bottom', '-10vh');
+
+    $('#modal').css('opacity', '1');
+
+    if (geoError == true) {
+      $('#modalTitle').text("Geolocation Error");
+      $('#modalDetails').text("Couldn't find your location. Refresh this page and try again.")
+    } else {
+      $('#modalTitle').text("No Place Found");
+      $('#modalDetails').text("Cannot find a place matching your parameters. Please try again.");
+    }
   },
 
   //Launch an external Google Maps navigation instance

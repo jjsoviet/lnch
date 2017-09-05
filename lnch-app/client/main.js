@@ -84,5 +84,9 @@ Template.mapsection.events({
 
   "mousedown #navigate": function(event, template) {
     Meteor.mapfunctions.launchMaps();
+  },
+
+  "mousedown #modalClose": function(event, template) {
+    $('#modal').css("opacity", "0");
   }
 });

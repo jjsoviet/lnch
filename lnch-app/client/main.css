@@ -205,6 +205,9 @@
   max-height: 8vh;
   font-size: 4em;
   padding: 1vh 3vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   transform: translateX(50%);
   -webkit-transform: translateX(50%);
 }
@@ -222,4 +225,49 @@
 
 .reroll-button:hover, .nav-button:hover {
   cursor: pointer;
+}
+
+/*Modal Styles*/
+.modal-window {
+  font-family: 'Teko', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  opacity: 0;
+  top: 50vh;
+  left: 50vw;
+  width: 30vw;
+  height: 30vh;
+  background: rgba(0,0,0,1);
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transition: opacity 200ms ease-in-out;
+  -webkit-transition: opacity 200ms ease-in-out;
+}
+
+.modal-window .modal-close {
+  color: rgb(255, 151, 13);
+  margin-top: 10px;
+  font-size: 2.2em;
+}
+
+.modal-window .modal-close:hover {
+  cursor: pointer;
+}
+
+.modal-window .modal-content {
+  font-weight: 200;
+  margin: 20px;
+}
+
+.modal-window .modal-content #modalTitle {
+  color: rgb(255, 151, 13);
+  font-size: 3em;
+}
+
+.modal-window .modal-content #modalDetails {
+  color: rgb(255,255,255);
+  font-size: 2.2em;
 }
