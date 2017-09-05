@@ -9,6 +9,9 @@ var circle;
 var startpin;
 var endpin;
 var infoWindow;
+var navOrigin;
+var navDest;
+var navDestID;
 var markers = [];
 
 Meteor.mapfunctions = {
@@ -156,6 +159,7 @@ Meteor.mapfunctions = {
   //Display result data
   populateData: function(place, details) {
     $('.slide-info').css('margin-left', '-30vw');
+    $('.slide-down-info').css('margin-bottom', '-10vh');
 
     //Initialize info objects
     var title = document.getElementById('resTitle');
@@ -164,6 +168,11 @@ Meteor.mapfunctions = {
     var website = document.getElementById('resWebsite');
     var price = document.getElementById('resPrice');
     var rating = document.getElementById('resRating');
+
+    //Save the origin and destination IDs
+    navOrigin = currentPos.lat + ',' + currentPos.lng;
+    navDest = place.name;
+    navDestID = details.place_id;
 
     setTimeout(function() {
       title.innerText = "";
@@ -190,6 +199,7 @@ Meteor.mapfunctions = {
 
       $('#infobar').css('opacity', '1');
       $('.slide-info').css('margin-left', '0');
+      $('.slide-down-info').css('margin-bottom', '0');
     }, 600);
 
 
@@ -230,5 +240,19 @@ Meteor.mapfunctions = {
                             'Error: The Geolocation service failed.' :
                             'Error: Your browser doesn\'t support geolocation.');
       infoWindow.open(map);
+  },
+
+  //Launch an external Google Maps navigation instance
+  launchMaps: function() {
+    var baseURL = "https://www.google.com/maps/dir/?api=1";
+    var originURL = "&origin=" + navOrigin;
+    var destURL = "&destination=" + navDest + "&destination_place_id=" + navDestID;
+    var actionsURL = "&travelmode=driving&dir_action=navigate";
+    var fullURL = baseURL + originURL + destURL + actionsURL;
+
+    console.log(fullURL);
+
+    var tab = window.open(fullURL, '_blank');
+    tab.focus();
   }
 };

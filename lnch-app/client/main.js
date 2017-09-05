@@ -78,7 +78,11 @@ Template.mapsection.helpers({
 });
 
 Template.mapsection.events({
-  "mousedown #reroll": function(event, template){
+  "mousedown #reroll": function(event, template) {
     Meteor.mapfunctions.search();
+  },
+
+  "mousedown #navigate": function(event, template) {
+    Meteor.mapfunctions.launchMaps();
   }
 });

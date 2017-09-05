@@ -1,14 +1,3 @@
-/*Globals*/
-.row.inline-row {
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: baseline;
-  background: rgba(0,0,0,1);
-  margin: 5vh 0;
-  padding: 1vh 2vw;
-}
-
 /*Form Styles*/
 #titleSection {
   background-image: url('/img/Barbecue.jpg');
@@ -24,6 +13,16 @@
   -o-transition: background-image 600ms ease-in-out;
   -ms-transition: background-image 600ms ease-in-out;
   transition: background-image 600ms ease-in-out;
+}
+
+.row.inline-row {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  background: rgba(0,0,0,1);
+  margin: 5vh 0;
+  padding: 1vh 2vw;
 }
 
 .input-group {
@@ -112,7 +111,7 @@
   -webkit-transition: opacity 500ms ease-in-out;
 }
 
-.info-segment, .reroll-button {
+.info-segment, .reroll-button, .nav-button {
   background: rgba(0,0,0,1);
   padding: 1vh 1vw;
 }
@@ -189,9 +188,8 @@
   color: rgb(255, 151, 13);
 }
 
-.reroll-button {
+.nav-button, .reroll-button {
   position: absolute;
-  right: 0;
   bottom: 0;
   border: 0;
   margin: 0;
@@ -201,6 +199,27 @@
   color: rgb(255, 151, 13);
 }
 
-.reroll-button:hover {
+.nav-button {
+  right: 50vw;
+  max-width: 10vw;
+  max-height: 8vh;
+  font-size: 4em;
+  padding: 1vh 3vw;
+  transform: translateX(50%);
+  -webkit-transform: translateX(50%);
+}
+
+.slide-down-info {
+  margin-bottom: -10vh;
+  overflow: hidden;
+  -webkit-transition: margin-bottom 200ms ease-in-out;
+  transition: margin-bottom 200ms ease-in-out;
+}
+
+.reroll-button {
+  right: 0;
+}
+
+.reroll-button:hover, .nav-button:hover {
   cursor: pointer;
 }
