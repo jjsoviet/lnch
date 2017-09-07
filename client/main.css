@@ -1,0 +1,273 @@
+/*Form Styles*/
+#titleSection {
+  background-image: url('/img/Barbecue.jpg');
+  background-color: rgba(0,0,0, 0.2);
+  background-blend-mode: darken;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: rgb(255, 255, 255);
+  opacity: 1;
+  -webkit-transition: background-image 600ms ease-in-out;
+  -moz-transition: background-image 600ms ease-in-out;
+  -o-transition: background-image 600ms ease-in-out;
+  -ms-transition: background-image 600ms ease-in-out;
+  transition: background-image 600ms ease-in-out;
+}
+
+.row.inline-row {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  background: rgba(0,0,0,1);
+  margin: 5vh 0;
+  padding: 1vh 2vw;
+}
+
+.input-group {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.input-group h1, .select-box {
+    font-family: 'Teko', sans-serif;
+    font-weight: 300;
+    font-size: 8em;
+    line-height: 0;
+}
+
+.input-group .food-line,.input-group .distance-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+.select-box {
+    color: rgb(255, 151, 13);
+    background: rgba(0,0,0,1);
+    border: 0px;
+    margin: 0px 2vw;
+}
+
+.select-box option {
+  color: rgb(255, 151, 13);
+  font-size: 2vw;
+}
+
+.launch-button {
+  font-family: 'Teko', sans-serif;
+  font-weight: 100;
+  color: rgb(255, 255, 255);
+  background: rgba(0,0,0,0);
+  border: 0px;
+  font-size: 8em;
+  margin-left: 20px;
+}
+
+.launch-button i {
+  font-size: 1.2em;
+  vertical-align: middle;
+  color: rgb(255, 151, 13);
+}
+
+.title-name {
+  font-family: 'Teko', sans-serif;
+  font-weight: 100;
+  position: absolute;
+  bottom: 2vh;
+  right: 2vw;
+  font-size: 3em;
+}
+
+/*Map View Styles*/
+.map-view {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+}
+
+.info-bar {
+  font-family: 'Teko', sans-serif;
+  font-weight: 300;
+  font-size: 1.8em;
+  background: rgba(0,0,0,0);
+  color: rgb(255,255,255);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+  -webkit-transition: opacity 500ms ease-in-out;
+}
+
+.info-segment, .reroll-button, .nav-button {
+  background: rgba(0,0,0,1);
+  padding: 1vh 1vw;
+}
+
+.info-segment {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.info-segment i {
+  color: rgb(255, 151, 13);
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.info-segment a i {
+  vertical-align: middle;
+}
+
+.info-segment a {
+  text-decoration: none;
+  color: rgb(255,255,255);
+}
+
+.info-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+}
+
+.slide-info {
+  margin-left: -30vw;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  -webkit-transition: margin-left 200ms ease-in-out;
+  transition: margin-left 200ms ease-in-out;
+}
+
+.info-line h3, .info-line p {
+  padding: 1vh 1vw;
+}
+
+.info-line h3 {
+  color: rgba(0,0,0,1);
+  background: rgb(255, 151, 13);
+  font-size: 1.8em;
+  margin-bottom: 0;
+}
+
+.info-line p {
+  background: rgba(0,0,0,1);
+}
+
+.icon-segment {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.icon-segment span {
+  margin-right: 10px;
+}
+
+.icon-segment #resRating, .icon-segment #resPrice {
+    font-size: 1.2em;
+}
+
+.icon-segment #resRating span, .icon-segment #resPrice {
+  color: rgb(255, 151, 13);
+}
+
+.nav-button, .reroll-button {
+  position: absolute;
+  bottom: 0;
+  border: 0;
+  margin: 0;
+  font-family: 'Teko', sans-serif;
+  font-weight: 100;
+  font-size: 2.6em;
+  color: rgb(255, 151, 13);
+}
+
+.nav-button {
+  right: 50vw;
+  max-width: 10vw;
+  max-height: 8vh;
+  font-size: 4em;
+  padding: 1vh 3vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  transform: translateX(50%);
+  -webkit-transform: translateX(50%);
+}
+
+.slide-down-info {
+  margin-bottom: -10vh;
+  overflow: hidden;
+  -webkit-transition: margin-bottom 200ms ease-in-out;
+  transition: margin-bottom 200ms ease-in-out;
+}
+
+.reroll-button {
+  right: 0;
+}
+
+.reroll-button:hover, .nav-button:hover {
+  cursor: pointer;
+}
+
+/*Modal Styles*/
+.modal-window {
+  font-family: 'Teko', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  opacity: 0;
+  top: 50vh;
+  left: 50vw;
+  width: 30vw;
+  height: 30vh;
+  background: rgba(0,0,0,1);
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transition: opacity 200ms ease-in-out;
+  -webkit-transition: opacity 200ms ease-in-out;
+}
+
+.modal-window .modal-close {
+  color: rgb(255, 151, 13);
+  margin-top: 10px;
+  font-size: 2.2em;
+}
+
+.modal-window .modal-close:hover {
+  cursor: pointer;
+}
+
+.modal-window .modal-content {
+  font-weight: 200;
+  margin: 20px;
+}
+
+.modal-window .modal-content #modalTitle {
+  color: rgb(255, 151, 13);
+  font-size: 3em;
+}
+
+.modal-window .modal-content #modalDetails {
+  color: rgb(255,255,255);
+  font-size: 2.2em;
+}
