@@ -242,12 +242,27 @@
 }
 
 .reroll-button {
+  padding: 1vh 3vw;
   color: rgb(255, 151, 13);
   right: 0;
 }
 
 .reroll-button:hover, .nav-button:hover {
   cursor: pointer;
+}
+
+.back-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 0;
+  padding: 1vh 3vw;
+  text-decoration: none;
+  font-family: 'Teko', sans-serif;
+  font-weight: 100;
+  font-size: 2em;
+  background: rgba(0,0,0,1);
+  color: rgb(255, 151, 13);
 }
 
 /*Modal Styles*/
@@ -360,6 +375,10 @@
   .reroll-button {
     font-size: 2em;
     padding: 1vh 5vw;
+  }
+
+  .back-button {
+    font-size: 1.6em;
   }
 
   .nav-button {
