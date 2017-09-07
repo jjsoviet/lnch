@@ -92,6 +92,7 @@ Template.mapsection.events({
   },
 
   "mousedown #modalClose": function(event, template) {
+    $('#modal').css('z-index', '-1');
     $('#modal').css("opacity", "0");
   },
 

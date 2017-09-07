@@ -274,6 +274,7 @@
   align-items: center;
   position: absolute;
   opacity: 0;
+  z-index: -1;
   top: 50vh;
   left: 50vw;
   width: 30vw;
@@ -378,6 +379,7 @@
   .info-bar {
     font-size: 1.2em;
     top: 3vh;
+    bottom: auto;
   }
 
   .info-segment, .reroll-button, .nav-button {
