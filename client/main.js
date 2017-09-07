@@ -62,6 +62,7 @@ Template.formsection.events({
   },
 
   "mousedown #launch": function(event, template) {
+    $.fn.fullpage.setAllowScrolling(false);
     Meteor.mapfunctions.search();
   },
 
