@@ -93,5 +93,9 @@ Template.mapsection.events({
 
   "mousedown #modalClose": function(event, template) {
     $('#modal').css("opacity", "0");
+  },
+
+  "mousedown #back": function(event, template) {
+    $.fn.fullpage.setAllowScrolling(true);
   }
 });
