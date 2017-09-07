@@ -50,7 +50,7 @@ Meteor.mapfunctions = {
   //Attempt to get user location
   tryGeolocation: function(map) {
     console.log("Attempting geolocation");
-    
+
     navigator.geolocation.getCurrentPosition(function (position) {
         var pos = {
             lat: position.coords.latitude,
@@ -247,6 +247,7 @@ Meteor.mapfunctions = {
     $('.slide-info').css('margin-left', '-30vw');
     $('.slide-down-info').css('margin-bottom', '-10vh');
 
+    $('#modal').css('z-index', '999');
     $('#modal').css('opacity', '1');
 
     if (geoError == true) {
