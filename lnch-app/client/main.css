@@ -58,6 +58,26 @@
   font-size: 2vw;
 }
 
+.geo-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  padding: 1vh 2vw;
+  top: 0;
+  left: 0;
+}
+
+.geo-button i {
+  font-size: 4em;
+  color: rgb(255, 151, 13);
+}
+
+.geo-button i:hover {
+  cursor: pointer;
+}
+
 .launch-button {
   font-family: 'Teko', sans-serif;
   font-weight: 100;
@@ -286,6 +306,10 @@
     font-size: 2em;
   }
 
+  .geo-button i {
+    font-size: 3em;
+  }
+
   .info-bar {
     font-size: 1.5em;
   }
@@ -318,6 +342,10 @@
 
   .title-name {
       font-size: 1.6em;
+  }
+
+  .geo-button i {
+    font-size: 3em;
   }
 
   .info-bar {
