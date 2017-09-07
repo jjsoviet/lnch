@@ -40,28 +40,35 @@ Meteor.mapfunctions = {
 
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-
-            currentPos = pos;
-            var distance = document.getElementById('distance').value;
-
-            map.setCenter(new google.maps.LatLng(currentPos));
-            circle.setMap(map);
-            circle.setCenter(currentPos);
-            circle.setRadius(distance * 1609.34);
-
-            infoWindow = new google.maps.InfoWindow;
-        }, function () {
-            Meteor.mapfunctions.displayModal(true);
-        });
+        Meteor.mapfunctions.tryGeolocation(map);
     } else {
         // Browser doesn't support Geolocation
         Meteor.mapfunctions.displayModal(true);
     }
+  },
+
+  //Attempt to get user location
+  tryGeolocation: function(map) {
+    console.log("Attempting geolocation");
+    
+    navigator.geolocation.getCurrentPosition(function (position) {
+        var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
+
+        currentPos = pos;
+        var distance = document.getElementById('distance').value;
+
+        map.setCenter(new google.maps.LatLng(currentPos));
+        circle.setMap(map);
+        circle.setCenter(currentPos);
+        circle.setRadius(distance * 1609.34);
+
+        infoWindow = new google.maps.InfoWindow;
+    }, function () {
+        Meteor.mapfunctions.displayModal(true);
+    });
   },
 
   //Initiate search of destination

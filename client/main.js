@@ -42,6 +42,12 @@ Template.formsection.helpers({
   },
 });
 
+Template.formsection.onCreated(function() {
+  GoogleMaps.ready('foodMap', function(map) {
+    Meteor.mapfunctions.initMap(GoogleMaps.maps.foodMap.instance);
+  })
+});
+
 Template.formsection.events({
   'change #category' : function(event, template) {
     event.preventDefault();
@@ -55,15 +61,13 @@ Template.formsection.events({
     console.log(section);
   },
 
-  "mousedown #launch": function(event, template){
+  "mousedown #launch": function(event, template) {
     Meteor.mapfunctions.search();
-  }
-});
+  },
 
-Template.mapsection.onCreated(function() {
-  GoogleMaps.ready('foodMap', function(map) {
-    Meteor.mapfunctions.initMap(GoogleMaps.maps.foodMap.instance);
-  })
+  "mousedown #location": function(event, template) {
+    Meteor.mapfunctions.tryGeolocation(GoogleMaps.maps.foodMap.instance);
+  }
 });
 
 Template.mapsection.helpers({
