@@ -127,8 +127,11 @@
   justify-content: space-between;
   align-items: flex-start;
   opacity: 0;
-  transition: opacity 500ms ease-in-out;
   -webkit-transition: opacity 500ms ease-in-out;
+  -moz-transition: opacity 500ms ease-in-out;
+  -o-transition: opacity 500ms ease-in-out;
+  -ms-transition: opacity 500ms ease-in-out;
+  transition: opacity 500ms ease-in-out;
 }
 
 .info-segment, .reroll-button, .nav-button {
@@ -171,6 +174,9 @@
   height: auto;
   overflow: hidden;
   -webkit-transition: margin-left 200ms ease-in-out;
+  -moz-transition: margin-left 200ms ease-in-out;
+  -o-transition: margin-left 200ms ease-in-out;
+  -ms-transition: margin-left 200ms ease-in-out;
   transition: margin-left 200ms ease-in-out;
 }
 
@@ -219,6 +225,8 @@
 }
 
 .nav-button {
+  color: rgba(0,0,0,1);
+  background: rgb(255, 151, 13);
   right: 50vw;
   max-width: 10vw;
   max-height: 8vh;
@@ -228,21 +236,26 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  transform: translateX(50%);
   -webkit-transform: translateX(50%);
-  color: rgba(0,0,0,1);
-  background: rgb(255, 151, 13);
+  -moz-transform: translateX(50%);
+  -o-transform: translateX(50%);
+  -ms-transform: translateX(50%);
+  transform: translateX(50%);
 }
 
 .slide-down-info {
   margin-bottom: -10vh;
   overflow: hidden;
   -webkit-transition: margin-bottom 200ms ease-in-out;
+  -moz-transition: margin-bottom 200ms ease-in-out;
+  -o-transition: margin-bottom 200ms ease-in-out;
+  -ms-transition: margin-bottom 200ms ease-in-out;
   transition: margin-bottom 200ms ease-in-out;
 }
 
 .reroll-button {
   padding: 1vh 3vw;
+  max-width: 10vw;
   color: rgb(255, 151, 13);
   right: 0;
 }
@@ -280,10 +293,16 @@
   width: 30vw;
   height: 30vh;
   background: rgba(0,0,0,1);
-  transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
-  transition: opacity 200ms ease-in-out;
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
 }
 
 .modal-window .modal-close {
@@ -382,12 +401,18 @@
     bottom: auto;
   }
 
+  .info-bar .title-bar:first-child {
+    max-width: 70vw;
+    flex-wrap: wrap;
+  }
+
   .info-segment, .reroll-button, .nav-button {
     padding: 0.5vh 1.5vw;
   }
 
   .reroll-button {
     font-size: 2em;
+    max-width: 30vw;
     padding: 1vh 5vw;
     left: 0;
   }

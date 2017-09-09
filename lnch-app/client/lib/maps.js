@@ -8,7 +8,6 @@ var currentDest;
 var circle;
 var startpin;
 var endpin;
-var infoWindow;
 var navOrigin;
 var navDest;
 var navDestID;
@@ -20,7 +19,11 @@ Meteor.mapfunctions = {
     directionsService = new google.maps.DirectionsService;
     directionsDisplay = new google.maps.DirectionsRenderer;
     directionsDisplay.setMap(map);
-    directionsDisplay.setOptions( { suppressMarkers: true });
+    directionsDisplay.setOptions({
+      suppressMarkers: true,
+      suppressInfoWindows: true,
+      polylineOptions: { strokeColor: '#000', strokeOpacity: 1.0 }
+    });
 
     //Set custom markers
     startpin = new google.maps.MarkerImage('/img/startpin.png');
@@ -29,7 +32,6 @@ Meteor.mapfunctions = {
 
     //Set map services
     service = new google.maps.places.PlacesService(map);
-    infoWindow = new google.maps.InfoWindow;
     circle = new google.maps.Circle({
         strokeColor: '#FF970D',
         strokeOpacity: 0.8,
@@ -64,8 +66,6 @@ Meteor.mapfunctions = {
         circle.setMap(map);
         circle.setCenter(currentPos);
         circle.setRadius(distance * 1609.34);
-
-        infoWindow = new google.maps.InfoWindow;
     }, function () {
         Meteor.mapfunctions.displayModal(true);
     });
@@ -112,20 +112,7 @@ Meteor.mapfunctions = {
               markers[i].setMap(null);
 
           markers = new Array();
-          infoWindow.setMap(null);
       }
-  },
-
-  //Draw the circle
-  getCircle: function(magnitude) {
-      return {
-          path: google.maps.SymbolPath.CIRCLE,
-          fillColor: 'blue',
-          fillOpacity: .2,
-          scale: Math.pow(2, magnitude) / 2,
-          strokeColor: 'white',
-          strokeWeight: .5
-      };
   },
 
   //Place marker on Map
@@ -134,7 +121,6 @@ Meteor.mapfunctions = {
           return;
 
       var request = { reference: place.reference };
-      infoWindow = new google.maps.InfoWindow;
 
       service.getDetails(request, function (details, status) {
           if (details) {
@@ -156,15 +142,14 @@ Meteor.mapfunctions = {
               markers.push(start);
               markers.push(end);
 
-              Meteor.mapfunctions.populateData(place, details);
-
+              Meteor.mapfunctions.populateData(place, details, start, end);
               Meteor.mapfunctions.calculateAndDisplayRoute(place.geometry.location);
           }
       });
   },
 
   //Display result data
-  populateData: function(place, details) {
+  populateData: function(place, details, start, end) {
     $('.slide-info').css('margin-left', '-30vw');
     $('.slide-down-info').css('margin-bottom', '-10vh');
 
@@ -207,8 +192,11 @@ Meteor.mapfunctions = {
       $('#infobar').css('opacity', '1');
       $('.slide-info').css('margin-left', '0');
       $('.slide-down-info').css('margin-bottom', '0');
-    }, 600);
 
+      setTimeout(function() {
+        Meteor.mapfunctions.calculateOffset(start, end);
+      }, 0);
+    }, 600);
 
     price.innerText = "";
     if (place.price_level != NaN && place.price_level >= 0) {
@@ -224,13 +212,10 @@ Meteor.mapfunctions = {
           destination: dest,
           travelMode: 'DRIVING'
       }, function (response, status) {
-          if (status === 'OK') {
-              directionsDisplay.setDirections(response);
-              map = GoogleMaps.maps.foodMap.instance
-              map.setCenter(dest);
-          } else {
-              window.alert('Directions request failed due to ' + status);
-          }
+          if (status === 'OK')
+            directionsDisplay.setDirections(response);
+          else
+            window.alert('Directions request failed due to ' + status);
       });
   },
 
@@ -259,12 +244,73 @@ Meteor.mapfunctions = {
     }
   },
 
+  calculateOffset: function(start, end) {
+    var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    var startOffset = 0;
+    var endOffset = 0;
+    var offset = 0;
+    var infoPos = $('#resWebsite').offset().top + 200;
+    var launchPos = $('#navigate').offset().top - 50;
+    var startCoords = Meteor.mapfunctions.convertToPoint(start);
+    var endCoords = Meteor.mapfunctions.convertToPoint(end);
+
+    console.log("Positions:");
+    console.log(infoPos);
+    console.log(startCoords.y);
+    console.log(endCoords.y);
+
+    //Check if one of markers is covered by the info bar
+    if (width <= 768) {
+      if (startCoords.y <= infoPos)
+        startOffset = (startCoords.y - infoPos);
+      if (endCoords.y <= infoPos)
+        endOffset = (endCoords.y - infoPos);
+
+      offset = Math.min(startOffset, endOffset);
+
+      console.log("Offset: " + offset);
+
+      setTimeout(function(){
+        map = GoogleMaps.maps.foodMap.instance;
+        map.panBy(0, offset);
+
+        //Recheck if offset is overshot
+        console.log("Check start: " + (startCoords.y - offset));
+        console.log("Check end: " + (endCoords.y - offset));
+
+        if (offset != 0) {
+          if (startCoords.y - offset >= launchPos || endCoords.y - offset >= launchPos) {
+            map.setZoom(map.getZoom() - 2);
+            Meteor.mapfunctions.calculateOffset(start, end);
+          }
+        }
+      }, 100);
+    }
+  },
+
+  convertToPoint: function(marker) {
+    map = GoogleMaps.maps.foodMap.instance;
+    var scale = Math.pow(2, map.getZoom());
+    var nw = new google.maps.LatLng(
+        map.getBounds().getNorthEast().lat(),
+        map.getBounds().getSouthWest().lng()
+    );
+    var worldCoordinateNW = map.getProjection().fromLatLngToPoint(nw);
+    var worldCoordinate = map.getProjection().fromLatLngToPoint(marker.getPosition());
+    var pixelOffset = new google.maps.Point(
+        Math.floor((worldCoordinate.x - worldCoordinateNW.x) * scale),
+        Math.floor((worldCoordinate.y - worldCoordinateNW.y) * scale)
+    );
+
+    return pixelOffset;
+  },
+
   //Launch an external Google Maps navigation instance
   launchMaps: function() {
     var baseURL = "https://www.google.com/maps/dir/?api=1";
     var originURL = "&origin=" + navOrigin;
     var destURL = "&destination=" + navDest + "&destination_place_id=" + navDestID;
-    var actionsURL = "&travelmode=driving&dir_action=navigate";
+    var actionsURL = "&travelmode=driving";
     var fullURL = baseURL + originURL + destURL + actionsURL;
 
     console.log(fullURL);
