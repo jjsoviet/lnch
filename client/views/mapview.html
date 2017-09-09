@@ -1,0 +1,59 @@
+<template name="mapsection">
+  <div class="section" id="mapSection" data-anchor="mapPage">
+    <!--Map-->
+    <div id="map" class="map-view">
+      {{> googleMap name="foodMap" options=mapOptions}}
+    </div>
+
+    <!--Info Bar-->
+    <div class="info-bar" id="infobar">
+      <div class="title-bar">
+        <div class="info-line">
+          <h3 id="resTitle" class="slide-info"></h3>
+        </div>
+        <div class="info-line">
+          <p id="resAddr" class="slide-info"></p>
+        </div>
+        <div class="info-segment slide-info">
+          <div class="info-line">
+            <i class="material-icons slide-info">local_phone</i><span class="slide-info" id="resPhone"></span>
+          </div>
+          <div class="info-line">
+            <i class="material-icons slide-info">language</i><span class="slide-info" id="resWebsite"></span>
+          </div>
+          <div class="icon-segment slide-info">
+              <span id="resRating"></span>
+              <span id="resPrice"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Navigate Button-->
+    <button class="nav-button slide-down-info" id="navigate" tabindex="2">
+        LNCH!
+    </button>
+
+    <!--Reroll Button-->
+    <button class="reroll-button" id="reroll" tabindex="3">
+        Reroll
+    </button>
+
+    <!--Back Button-->
+    <a class="back-button" href="#titlePage" id="back" tabindex="4">
+        <i class="material-icons">keyboard_arrow_left</i>
+    </a>
+
+    <!--Error Modal-->
+    <div class="modal-window" id="modal">
+      <div class="modal-content">
+        <span id="modalTitle"></span>
+        <br />
+        <span id="modalDetails"></span>
+      </div>
+      <div class="modal-close" id="modalClose">
+        Close
+      </div>
+    </div>
+  </div>
+</template>
