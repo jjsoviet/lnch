@@ -242,6 +242,8 @@ Meteor.mapfunctions = {
       $('#modalTitle').text("No Place Found");
       $('#modalDetails').text("Cannot find a place matching your parameters. Please try again.");
     }
+
+    //Needs to be closed as the viewport goes to the main window
   },
 
   calculateOffset: function(start, end) {
@@ -253,13 +255,13 @@ Meteor.mapfunctions = {
     var endCoords = Meteor.mapfunctions.convertToPoint(end);
     var isPortrait = window.innerHeight > window.innerWidth;
     var infoPos = $('#resWebsite').offset().top + 200;
-    var launchPos = $('#navigate').offset().top - 50;
+    var launchPos = window.height - $('#navigate').height - 50;
     var widthPos = Math.max($('#resAddr').width(), $('#resTitle').width()) + 50;
 
     //Check if one of markers is covered by the info bar
-    if (width <= 768) {
+    if (width <= 1024) {
 
-      //Offset conditions for portrait mode
+      //Offset conditions for portrait and lanscape mode
       if (isPortrait) {
         if (startCoords.y <= infoPos)
           startOffset = (startCoords.y - infoPos);
