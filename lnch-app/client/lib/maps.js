@@ -151,7 +151,7 @@ Meteor.mapfunctions = {
   //Display result data
   populateData: function(place, details, start, end) {
     $('.slide-info').css('margin-left', '-30vw');
-    $('.slide-down-info').css('margin-bottom', '-10vh');
+    $('.slide-down-info').css('bottom', '-30vh');
 
     //Initialize info objects
     var title = document.getElementById('resTitle');
@@ -191,7 +191,7 @@ Meteor.mapfunctions = {
 
       $('#infobar').css('opacity', '1');
       $('.slide-info').css('margin-left', '0');
-      $('.slide-down-info').css('margin-bottom', '0');
+      $('.slide-down-info').css('bottom', '0');
 
       setTimeout(function() {
         Meteor.mapfunctions.calculateOffset(start, end);
@@ -249,39 +249,55 @@ Meteor.mapfunctions = {
     var startOffset = 0;
     var endOffset = 0;
     var offset = 0;
-    var infoPos = $('#resWebsite').offset().top + 200;
-    var launchPos = $('#navigate').offset().top - 50;
     var startCoords = Meteor.mapfunctions.convertToPoint(start);
     var endCoords = Meteor.mapfunctions.convertToPoint(end);
-
-    console.log("Positions:");
-    console.log(infoPos);
-    console.log(startCoords.y);
-    console.log(endCoords.y);
+    var isPortrait = window.innerHeight > window.innerWidth;
+    var infoPos = $('#resWebsite').offset().top + 200;
+    var launchPos = $('#navigate').offset().top - 50;
+    var widthPos = Math.max($('#resAddr').width(), $('#resTitle').width()) + 50;
 
     //Check if one of markers is covered by the info bar
     if (width <= 768) {
-      if (startCoords.y <= infoPos)
-        startOffset = (startCoords.y - infoPos);
-      if (endCoords.y <= infoPos)
-        endOffset = (endCoords.y - infoPos);
 
+      //Offset conditions for portrait mode
+      if (isPortrait) {
+        if (startCoords.y <= infoPos)
+          startOffset = (startCoords.y - infoPos);
+        if (endCoords.y <= infoPos)
+          endOffset = (endCoords.y - infoPos);
+      } else {
+        if (startCoords.x <= widthPos)
+          startOffset = (startCoords.x - widthPos);
+        if (endCoords.x <= widthPos)
+          endOffset = (endCoords.x - width);
+      }
+
+      //Use the least offset value
       offset = Math.min(startOffset, endOffset);
 
-      console.log("Offset: " + offset);
-
+      //Pan the existing maps overlay using the offset
       setTimeout(function(){
         map = GoogleMaps.maps.foodMap.instance;
-        map.panBy(0, offset);
+
+        if (isPortrait)
+          map.panBy(0, offset);
+        else
+          map.panBy(offset, 0);
 
         //Recheck if offset is overshot
-        console.log("Check start: " + (startCoords.y - offset));
-        console.log("Check end: " + (endCoords.y - offset));
-
         if (offset != 0) {
-          if (startCoords.y - offset >= launchPos || endCoords.y - offset >= launchPos) {
-            map.setZoom(map.getZoom() - 2);
-            Meteor.mapfunctions.calculateOffset(start, end);
+          if (isPortrait) {
+            console.log('portrait');
+            if (startCoords.y - offset >= launchPos || endCoords.y - offset >= launchPos) {
+              map.setZoom(map.getZoom() - 1);
+              Meteor.mapfunctions.calculateOffset(start, end);
+            }
+          } else {
+            console.log('landscape');
+            if (startCoords.x - offset >= width - 50 || endCoords.x - offset >= width - 50) {
+              map.setZoom(map.getZoom() - 1);
+              Meteor.mapfunctions.calculateOffset(start, end);
+            }
           }
         }
       }, 100);
