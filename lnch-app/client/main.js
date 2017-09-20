@@ -96,10 +96,14 @@ Template.mapsection.events({
 
   "mousedown #modalClose": function(event, template) {
     $('#modal').css('z-index', '-1');
-    $('#modal').css("opacity", "0");
+    $('#modal').css("opacity", '0');
+    $.fn.fullpage.setAllowScrolling(true);
+    location.hash = "#titlePage";  
   },
 
   "mousedown #back": function(event, template) {
     $.fn.fullpage.setAllowScrolling(true);
+    $('#modal').css('z-index', '-1');
+    $('#modal').css('opacity', '0');
   }
 });

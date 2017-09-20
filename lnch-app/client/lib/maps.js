@@ -241,9 +241,8 @@ Meteor.mapfunctions = {
     } else {
       $('#modalTitle').text("No Place Found");
       $('#modalDetails').text("Cannot find a place matching your parameters. Please try again.");
+      $('#modalClose').text("Retry");
     }
-
-    //Needs to be closed as the viewport goes to the main window
   },
 
   calculateOffset: function(start, end) {
