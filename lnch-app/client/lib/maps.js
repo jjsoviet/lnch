@@ -230,7 +230,7 @@ Meteor.mapfunctions = {
   //Display a modal on search/geolocation failure
   displayModal: function(geoError) {
     $('.slide-info').css('margin-left', '-30vw');
-    $('.slide-down-info').css('margin-bottom', '-10vh');
+    $('.slide-down-info').css('bottom', '-30vh');
 
     $('#modal').css('z-index', '999');
     $('#modal').css('opacity', '1');
@@ -256,11 +256,10 @@ Meteor.mapfunctions = {
     var isPortrait = window.innerHeight > window.innerWidth;
     var infoPos = $('#resWebsite').offset().top + 200;
     var launchPos = window.height - $('#navigate').height - 50;
-    var widthPos = Math.max($('#resAddr').width(), $('#resTitle').width()) + 50;
+    var widthPos = Math.max($('#resAddr').width() + $('#resTitle').width()) + 50;
 
     //Check if one of markers is covered by the info bar
     if (width <= 1024) {
-
       //Offset conditions for portrait and lanscape mode
       if (isPortrait) {
         if (startCoords.y <= infoPos)

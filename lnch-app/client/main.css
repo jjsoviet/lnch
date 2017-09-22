@@ -244,7 +244,7 @@
 }
 
 .slide-down-info {
-  bottom: -20vh;
+  bottom: -30vh;
   overflow: hidden;
   -webkit-transition: bottom 200ms ease-in-out;
   -moz-transition: bottom 200ms ease-in-out;
