@@ -9,9 +9,6 @@ import './main.html';
 //Load Maps API
 Meteor.startup(function() {
     GoogleMaps.load({ v: '3', key: 'AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo', libraries: 'geometry,places' });
-
-    if (window.innerHeight > window.innerWidth)
-      window.screen.lockOrientation('portrait-primary');
 });
 
 //Template Helpers
@@ -98,7 +95,7 @@ Template.mapsection.events({
     $('#modal').css('z-index', '-1');
     $('#modal').css("opacity", '0');
     $.fn.fullpage.setAllowScrolling(true);
-    location.hash = "#titlePage";  
+    location.hash = "#titlePage";
   },
 
   "mousedown #back": function(event, template) {

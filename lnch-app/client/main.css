@@ -332,7 +332,7 @@
 
 
 /*Responsive*/
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait), only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
   .input-group h1, .select-box, .launch-button {
       font-size: 4em;
   }
@@ -372,7 +372,7 @@
 }
 
 
-@media only screen and (max-device-width: 768px) {
+@media only screen and (max-device-width: 768px) and (orientation: portrait), only screen and (max-device-width: 768px) and (orientation: landscape) {
   .input-group {
     bottom: 10vh;
   }
