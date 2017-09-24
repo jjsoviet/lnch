@@ -277,29 +277,25 @@ Meteor.mapfunctions = {
     var isPortrait = (window.matchMedia("(orientation: portrait)").matches);
     var infoPos = $('#resWebsite').offset().top + 200;
     var launchPos = window.innerHeight - $('#navigate').height() - 50;
-    var widthPos = Math.max($('#resAddr').width(), $('#resTitle').width()) + 50;
-
-    console.log("Orientation: " + (isPortrait ? "Portrait" : "Landscape"));
+    var widthPos = Math.max($('#resAddr').width(), $('#resTitle').width()) + 30;
 
     //Check if one of markers is covered by the info bar
     if (true) {
       //Offset conditions for portrait and lanscape mode
+      if (isPortrait) {
+        if (startCoords.y <= infoPos)
+          startOffset = (startCoords.y - infoPos);
+        if (endCoords.y <= infoPos)
+          endOffset = (endCoords.y - infoPos);
+      } else {
+      if (startCoords.x <= widthPos)
+          startOffset = (startCoords.x - widthPos);
+        if (endCoords.x <= widthPos)
+          endOffset = (endCoords.x - width);
+      }
 
-        if (isPortrait) {
-          if (startCoords.y <= infoPos)
-            startOffset = (startCoords.y - infoPos);
-          if (endCoords.y <= infoPos)
-            endOffset = (endCoords.y - infoPos);
-        } else {
-          if (startCoords.x <= widthPos)
-            startOffset = (startCoords.x - widthPos);
-          if (endCoords.x <= widthPos)
-            endOffset = (endCoords.x - width);
-        }
-
-        //Use the least offset value
-        offset = Math.min(startOffset, endOffset);
-
+      //Use the least offset value
+      offset = Math.min(startOffset, endOffset);
 
       //Pan the existing maps overlay using the offset
       setTimeout(function() {
@@ -312,31 +308,27 @@ Meteor.mapfunctions = {
 
         //Recheck if offset is overshot
         if (offset != 0) {
-          console.log("Max height: " + launchPos);
-          console.log("Current Heights: " + startCoords.y + "," + endCoords.y);
           //Makes sure it doesn't zoom out too much
           if (map.getZoom() <= 5)
             return;
 
-            if (isPortrait) {
-              console.log("Max height: " + launchPos);
-              console.log("Current Heights: " + startCoords.y + "," + endCoords.y);
-
-              if (startCoords.y - offset >= launchPos || endCoords.y - offset >= launchPos) {
-                map.setZoom(map.getZoom() - 1);
-                Meteor.mapfunctions.calculateOffset();
-              }
-            } else {
-              if (startCoords.x - offset >= width - 30 || endCoords.x - offset >= width - 30) {
-                map.setZoom(map.getZoom() - 1);
-                Meteor.mapfunctions.calculateOffset();
-              }
+          if (!isPortrait) {
+            if (startCoords.x - offset >= width - 30 || endCoords.x - offset >= width - 30 || startCoords.y < 50 || endCoords.y < 50) {
+              map.setZoom(map.getZoom() - 1);
+              Meteor.mapfunctions.calculateOffset();
             }
+          }
+
+          if (startCoords.y - offset >= launchPos || endCoords.y - offset >= launchPos) {
+            map.setZoom(map.getZoom() - 1);
+            Meteor.mapfunctions.calculateOffset();
+          }
         }
       }, 100);
     }
   },
 
+  //Convert marker positions to actual pixel values
   convertToPoint: function(marker) {
     map = GoogleMaps.maps.foodMap.instance;
     var scale = Math.pow(2, map.getZoom());
