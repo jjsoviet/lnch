@@ -9,6 +9,7 @@ import './main.html';
 //Load Maps API
 Meteor.startup(function() {
     GoogleMaps.load({ v: '3', key: 'AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo', libraries: 'geometry,places' });
+    $.fn.fullpage.setAllowScrolling(false);
 });
 
 //Template Helpers

@@ -34,7 +34,7 @@
 .input-group h1, .select-box {
     font-family: 'Teko', sans-serif;
     font-weight: 300;
-    font-size: 8em;
+    font-size: 6em;
     line-height: 0;
 }
 
@@ -55,7 +55,7 @@
 
 .select-box option {
   color: rgb(255, 151, 13);
-  font-size: 2vw;
+  font-size: 0.8em;
 }
 
 .geo-group {
@@ -334,7 +334,11 @@
 /*Responsive*/
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait), only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
   .input-group h1, .select-box, .launch-button {
-      font-size: 4em;
+    font-size: 4em;
+  }
+
+  .select-box option {
+    font-size: 0.8em;
   }
 
   .title-name {
@@ -389,6 +393,10 @@
 
   .title-name {
       font-size: 1.6em;
+  }
+
+  .select-box option {
+    font-size: 1em;
   }
 
   .geo-button i {
