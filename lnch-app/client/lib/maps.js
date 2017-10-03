@@ -20,7 +20,7 @@ window.addEventListener('orientationchange', function() {
 
   //Trigger a resize event and zoom, then check for offset
   if (currentPos != null) {
-    map.setZoom(9);
+    map.setZoom(12);
     google.maps.event.trigger(map, 'resize');
     map.setCenter(currentPos);
 
@@ -311,7 +311,7 @@ Meteor.mapfunctions = {
         //Recheck for excessive shifting
         if (offset != 0) {
           //Make sure it doesn't zoom out too much
-          if (map.getZoom() <= 7)
+          if (map.getZoom() <= 10)
             return;
 
           //If landscape, check for out of window bounds shifting
