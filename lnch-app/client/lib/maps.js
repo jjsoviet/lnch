@@ -267,7 +267,12 @@ Meteor.mapfunctions = {
 
   //Calculate UI offset values to shift map markers
   calculateOffset: function() {
+    //Check for non-null marker values
     if (start == null || end == null)
+      return;
+
+    //Make sure it doesn't zoom out too much
+    if (map.getZoom() <= 10)
       return;
 
     var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
@@ -310,10 +315,6 @@ Meteor.mapfunctions = {
 
         //Recheck for excessive shifting
         if (offset != 0) {
-          //Make sure it doesn't zoom out too much
-          if (map.getZoom() <= 10)
-            return;
-
           //If landscape, check for out of window bounds shifting
           if (!isPortrait) {
             if (startCoords.x - offset >= width - 30 || endCoords.x - offset >= width - 30 || startCoords.y < 50 || endCoords.y < 50) {
