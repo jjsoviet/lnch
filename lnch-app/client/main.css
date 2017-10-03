@@ -331,7 +331,7 @@
 }
 
 /*Responsive*/
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait), only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait), only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
   .input-group h1, .select-box, .launch-button {
     font-size: 4em;
   }
@@ -345,7 +345,7 @@
   }
 
   .geo-button i {
-    font-size: 3em;
+    font-size: 2.4em;
   }
 
   .info-bar {
@@ -375,7 +375,7 @@
 }
 
 
-@media only screen and (max-device-width: 768px) and (orientation: portrait), only screen and (max-device-width: 768px) and (orientation: landscape) {
+@media only screen and (max-width: 768px) and (orientation: portrait), only screen and (max-width: 768px) and (orientation: landscape) {
   .input-group {
     bottom: 10vh;
   }
@@ -399,7 +399,7 @@
   }
 
   .geo-button i {
-    font-size: 3em;
+    font-size: 2em;
   }
 
   .info-bar {
