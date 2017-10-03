@@ -9,7 +9,6 @@ import './main.html';
 //Load Maps API
 Meteor.startup(function() {
     GoogleMaps.load({ v: '3', key: 'AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo', libraries: 'geometry,places' });
-    $.fn.fullpage.setAllowScrolling(false);
 });
 
 //Template Helpers
@@ -49,6 +48,10 @@ Template.formsection.onCreated(function() {
   })
 });
 
+Template.formsection.onRendered = function(){
+    $.fn.fullpage.setAllowScrolling(false);
+}
+
 Template.formsection.events({
   'change #category' : function(event, template) {
     event.preventDefault();
@@ -58,8 +61,6 @@ Template.formsection.events({
     var selection = selector.options[selector.selectedIndex].text;
 
     section.style.backgroundImage = "url('/img/" + selection + ".jpg')";
-
-    console.log(section);
   },
 
   "mousedown #launch": function(event, template) {

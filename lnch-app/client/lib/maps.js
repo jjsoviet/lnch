@@ -17,11 +17,11 @@ var markers = [];
 
 //Orientation Event Listener
 window.addEventListener('orientationchange', function() {
-  console.log("Orientation changed");
 
+  //Trigger a resize event and zoom, then check for offset
   if (currentPos != null) {
-    map.setZoom(9);
     google.maps.event.trigger(map, 'resize');
+    map.setZoom(9);
     map.setCenter(currentPos);
 
     setTimeout(function(){
@@ -59,19 +59,17 @@ Meteor.mapfunctions = {
         fillOpacity: 0.5
     });
 
-    // Try HTML5 geolocation.
+    //Try HTML5 geolocation
     if (navigator.geolocation) {
         Meteor.mapfunctions.tryGeolocation(map);
     } else {
-        // Browser doesn't support Geolocation
+        //Display error message when geolocation fails
         Meteor.mapfunctions.displayModal(true);
     }
   },
 
   //Attempt to get user location
   tryGeolocation: function(map) {
-    console.log("Attempting geolocation");
-
     navigator.geolocation.getCurrentPosition(function (position) {
         var pos = {
             lat: position.coords.latitude,
@@ -81,6 +79,7 @@ Meteor.mapfunctions = {
         currentPos = pos;
         var distance = document.getElementById('distance').value;
 
+        //Set center and draw a circle around the designated radius
         map.setCenter(new google.maps.LatLng(currentPos));
         circle.setMap(map);
         circle.setCenter(currentPos);
@@ -105,7 +104,7 @@ Meteor.mapfunctions = {
             var category = document.getElementById('category');
             var region = document.getElementById('region');
 
-            //Build the Place Search request
+            //Build the place search request
             var request = {
                 location: pos,
                 radius: distance * 1609.34,
@@ -143,7 +142,7 @@ Meteor.mapfunctions = {
 
       service.getDetails(request, function (details, status) {
           if (details) {
-              //Draw the markers for start and end
+              //Draw start and end markers
               start = new google.maps.Marker({
                   map: map,
                   icon: startpin,
@@ -161,6 +160,7 @@ Meteor.mapfunctions = {
               markers.push(start);
               markers.push(end);
 
+              //Display the map route
               Meteor.mapfunctions.populateData(place, details, start, end);
               Meteor.mapfunctions.calculateAndDisplayRoute(place.geometry.location);
           }
@@ -193,6 +193,7 @@ Meteor.mapfunctions = {
       website.innerHTML = "";
     }, 100)
 
+    //Display relevant information
     setTimeout(function() {
       title.innerText = place.name;
       address.innerText = details.formatted_address;
@@ -264,6 +265,7 @@ Meteor.mapfunctions = {
     }
   },
 
+  //Calculate UI offset values to shift map markers
   calculateOffset: function() {
     if (start == null || end == null)
       return;
@@ -277,11 +279,11 @@ Meteor.mapfunctions = {
     var isPortrait = (window.matchMedia("(orientation: portrait)").matches);
     var infoPos = $('#resWebsite').offset().top + 200;
     var launchPos = window.innerHeight - $('#navigate').height() - 50;
-    var widthPos = Math.max($('#resAddr').width(), $('#resTitle').width()) + 30;
+    var widthPos = Math.max($('#resAddr').width(), $('#resTitle').width()) + 50;
 
     //Check if one of markers is covered by the info bar
     if (true) {
-      //Offset conditions for portrait and lanscape mode
+      //Offset conditions for portrait and landscape mode
       if (isPortrait) {
         if (startCoords.y <= infoPos)
           startOffset = (startCoords.y - infoPos);
@@ -306,12 +308,13 @@ Meteor.mapfunctions = {
         else
           map.panBy(offset, 0);
 
-        //Recheck if offset is overshot
+        //Recheck for excessive shifting
         if (offset != 0) {
-          //Makes sure it doesn't zoom out too much
+          //Make sure it doesn't zoom out too much
           if (map.getZoom() <= 5)
             return;
 
+          //If landscape, check for out of window bounds shifting
           if (!isPortrait) {
             if (startCoords.x - offset >= width - 30 || endCoords.x - offset >= width - 30 || startCoords.y < 50 || endCoords.y < 50) {
               map.setZoom(map.getZoom() - 1);
@@ -319,6 +322,7 @@ Meteor.mapfunctions = {
             }
           }
 
+          //If shifting overlaps launch button
           if (startCoords.y - offset >= launchPos || endCoords.y - offset >= launchPos) {
             map.setZoom(map.getZoom() - 1);
             Meteor.mapfunctions.calculateOffset();
@@ -353,8 +357,6 @@ Meteor.mapfunctions = {
     var destURL = "&destination=" + navDest + "&destination_place_id=" + navDestID;
     var actionsURL = "&travelmode=driving";
     var fullURL = baseURL + originURL + destURL + actionsURL;
-
-    console.log(fullURL);
 
     var tab = window.open(fullURL, '_blank');
     tab.focus();
