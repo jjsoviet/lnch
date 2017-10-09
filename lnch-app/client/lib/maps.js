@@ -24,9 +24,7 @@ window.addEventListener('orientationchange', function() {
     google.maps.event.trigger(map, 'resize');
     map.setCenter(currentPos);
 
-    setTimeout(function(){
-       Meteor.mapfunctions.calculateOffset();
-    }, 300);
+    Meteor.mapfunctions.calculateOffset();
   }
 }, false);
 
@@ -213,9 +211,7 @@ Meteor.mapfunctions = {
       $('.slide-info').css('margin-left', '0');
       $('.slide-down-info').css('bottom', '0');
 
-      setTimeout(function() {
-        Meteor.mapfunctions.calculateOffset();
-      }, 0);
+      Meteor.mapfunctions.calculateOffset();
     }, 600);
 
     price.innerText = "";
@@ -286,10 +282,12 @@ Meteor.mapfunctions = {
     map = GoogleMaps.maps.foodMap.instance;
 
     //Offset conditions for portrait and landscape mode
-    if (isPortrait)
-      Meteor.mapfunctions.calculatePortraitOffset(startCoords, endCoords, infoPos, launchPos, map);
-    else
-      Meteor.mapfunctions.calculateLandscapeOffset(startCoords, endCoords, widthPos, width, map);
+    setTimeout(function() {
+      if (isPortrait)
+        Meteor.mapfunctions.calculatePortraitOffset(startCoords, endCoords, infoPos, launchPos, map);
+      else
+        Meteor.mapfunctions.calculateLandscapeOffset(startCoords, endCoords, widthPos, width, map);
+    }, 300);
   },
 
   //Portrait offset determination
