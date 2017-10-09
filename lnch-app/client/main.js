@@ -8,7 +8,11 @@ import './main.html';
 
 //Load Maps API
 Meteor.startup(function() {
-    GoogleMaps.load({ v: '3', key: 'AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo', libraries: 'geometry,places' });
+  //Load the Google Maps instance
+  GoogleMaps.load({ v: '3', key: 'AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo', libraries: 'geometry,places' });
+
+  //Default to the Title section on Refresh
+  location.hash = "#titlePage";
 });
 
 //Template Helpers

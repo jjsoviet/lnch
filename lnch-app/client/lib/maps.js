@@ -26,7 +26,7 @@ window.addEventListener('orientationchange', function() {
 
     setTimeout(function(){
        Meteor.mapfunctions.calculateOffset();
-    }, 200);
+    }, 300);
   }
 }, false);
 
@@ -275,61 +275,60 @@ Meteor.mapfunctions = {
     if (map.getZoom() <= 10)
       return;
 
+    //Initialize values to be used for determining offset
     var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-    var startOffset = 0;
-    var endOffset = 0;
-    var offset = 0;
     var startCoords = Meteor.mapfunctions.convertToPoint(start);
     var endCoords = Meteor.mapfunctions.convertToPoint(end);
     var isPortrait = (window.matchMedia("(orientation: portrait)").matches);
-    var infoPos = $('#resWebsite').offset().top + 200;
+    var infoPos = $('#resAddr').offset().top + 300;
     var launchPos = window.innerHeight - $('#navigate').height() - 50;
     var widthPos = Math.max($('#resAddr').width(), $('#resTitle').width()) + 50;
+    map = GoogleMaps.maps.foodMap.instance;
 
-    //Check if one of markers is covered by the info bar
-    if (true) {
-      //Offset conditions for portrait and landscape mode
-      if (isPortrait) {
-        if (startCoords.y <= infoPos)
-          startOffset = (startCoords.y - infoPos);
-        if (endCoords.y <= infoPos)
-          endOffset = (endCoords.y - infoPos);
-      } else {
-      if (startCoords.x <= widthPos)
-          startOffset = (startCoords.x - widthPos);
-        if (endCoords.x <= widthPos)
-          endOffset = (endCoords.x - width);
-      }
+    //Offset conditions for portrait and landscape mode
+    if (isPortrait)
+      Meteor.mapfunctions.calculatePortraitOffset(startCoords, endCoords, infoPos, launchPos, map);
+    else
+      Meteor.mapfunctions.calculateLandscapeOffset(startCoords, endCoords, widthPos, width, map);
+  },
 
-      //Use the least offset value
-      offset = Math.min(startOffset, endOffset);
+  //Portrait offset determination
+  calculatePortraitOffset: function(startCoords, endCoords, infoPos, launchPos, map) {
+    var startOffset = 0;
+    var endOffset = 0;
 
-      //Pan the existing maps overlay using the offset
-      setTimeout(function() {
-        map = GoogleMaps.maps.foodMap.instance;
+    if (startCoords.y <= infoPos)
+      startOffset = (startCoords.y - infoPos);
+    if (endCoords.y <= infoPos)
+      endOffset = (endCoords.y - infoPos);
 
-        if (isPortrait)
-          map.panBy(0, offset);
-        else
-          map.panBy(offset, 0);
+    var offset = Math.min(startOffset, endOffset);
 
-        //Recheck for excessive shifting
-        if (offset != 0) {
-          //If landscape, check for out of window bounds shifting
-          if (!isPortrait) {
-            if (startCoords.x - offset >= width - 30 || endCoords.x - offset >= width - 30 || startCoords.y < 50 || endCoords.y < 50) {
-              map.setZoom(map.getZoom() - 1);
-              Meteor.mapfunctions.calculateOffset();
-            }
-          }
+    map.panBy(0, offset);
 
-          //If shifting overlaps launch button
-          if (startCoords.y - offset >= launchPos || endCoords.y - offset >= launchPos) {
-            map.setZoom(map.getZoom() - 1);
-            Meteor.mapfunctions.calculateOffset();
-          }
-        }
-      }, 100);
+    if (startCoords.y - offset > launchPos || endCoords.y - offset >= launchPos) {
+      map.setZoom(map.getZoom() - 1);
+      Meteor.mapfunctions.calculateOffset();
+    }
+  },
+
+  //Landscape offset determination
+  calculateLandscapeOffset: function(startCoords, endCoords, widthPos, width, map) {
+    var startOffset = 0;
+    var endOffset = 0;
+
+    if (startCoords.x <= widthPos)
+        startOffset = (startCoords.x - widthPos);
+    if (endCoords.x <= widthPos)
+        endOffset = (endCoords.x - width);
+
+    var offset = Math.min(startOffset, endOffset);
+
+    map.panBy(offset, 0);
+
+    if (startCoords.x - offset >= width - 100 || endCoords.x - offset >= width - 100 || startCoords.y < 100 || endCoords.y < 100) {
+      map.setZoom(map.getZoom() - 1);
+      Meteor.mapfunctions.calculateOffset();
     }
   },
 
