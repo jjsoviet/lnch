@@ -13,6 +13,9 @@ Meteor.startup(function() {
 
   //Default to the Title section on Refresh
   location.hash = "#titlePage";
+
+  //Query for orientation
+  Meteor.mapfunctions.checkOrientation();
 });
 
 //Template Helpers

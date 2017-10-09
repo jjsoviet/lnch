@@ -14,23 +14,41 @@ var navDestID;
 var start;
 var end;
 var markers = [];
+var currOrientation = "";
 
 //Orientation Event Listener
 window.addEventListener('orientationchange', function() {
 
+  //Check for orientation
+  Meteor.mapfunctions.checkOrientation();
+
   //Trigger a resize event and zoom, then check for offset
-  if (currentPos != null) {
-    map.setZoom(12);
+  if (currentPos != null && currOrientation != "") {
     google.maps.event.trigger(map, 'resize');
     map.setCenter(currentPos);
+    map.setZoom(12);
+    map.panBy(50, -50);
 
-    Meteor.mapfunctions.calculateOffset();
+    setTimeout(function() {
+        Meteor.mapfunctions.calculateOffset();
+    }, 300);
   }
 }, false);
 
 
 //Maps API Main Functions
 Meteor.mapfunctions = {
+  //Check orientation
+  checkOrientation: function() {
+    var isPortrait = window.matchMedia("(orientation: portrait)");
+    if (isPortrait.matches)
+      currOrientation = "Portrait";
+    else
+      currOrientation = "Landscape";
+
+  },
+
+  //Initialize Google Maps
   initMap: function(m) {
     map = m;
     directionsService = new google.maps.DirectionsService;
@@ -275,19 +293,16 @@ Meteor.mapfunctions = {
     var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
     var startCoords = Meteor.mapfunctions.convertToPoint(start);
     var endCoords = Meteor.mapfunctions.convertToPoint(end);
-    var isPortrait = (window.matchMedia("(orientation: portrait)").matches);
     var infoPos = $('#resAddr').offset().top + 300;
     var launchPos = window.innerHeight - $('#navigate').height() - 50;
     var widthPos = Math.max($('#resAddr').width(), $('#resTitle').width()) + 50;
     map = GoogleMaps.maps.foodMap.instance;
 
     //Offset conditions for portrait and landscape mode
-    setTimeout(function() {
-      if (isPortrait)
-        Meteor.mapfunctions.calculatePortraitOffset(startCoords, endCoords, infoPos, launchPos, map);
-      else
-        Meteor.mapfunctions.calculateLandscapeOffset(startCoords, endCoords, widthPos, width, map);
-    }, 300);
+    if (currOrientation == "Portrait")
+      Meteor.mapfunctions.calculatePortraitOffset(startCoords, endCoords, infoPos, launchPos, map);
+    else
+      Meteor.mapfunctions.calculateLandscapeOffset(startCoords, endCoords, widthPos, width, map);
   },
 
   //Portrait offset determination
