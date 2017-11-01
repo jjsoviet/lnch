@@ -7,7 +7,7 @@ import './main.html';
 //AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo
 
 //Load Maps API
-Meteor.startup(function() {
+Meteor.startup(() => {
   //Load the Google Maps instance
   GoogleMaps.load({ v: '3', key: 'AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo', libraries: 'geometry,places' });
 
@@ -44,23 +44,23 @@ Template.formsection.helpers({
     { distance: 20, title: "Twenty" }
   ],
 
-  search: function() {
-    search();
+  search: () => {
+    Meteor.mapfunctions.search();
   },
 });
 
-Template.formsection.onCreated(function() {
+Template.formsection.onCreated(() => {
   GoogleMaps.ready('foodMap', function(map) {
     Meteor.mapfunctions.initMap(GoogleMaps.maps.foodMap.instance);
   })
 });
 
-Template.formsection.onRendered = function(){
+Template.formsection.onRendered = () => {
     $.fn.fullpage.setAllowScrolling(false);
 }
 
 Template.formsection.events({
-  'change #category' : function(event, template) {
+  'change #category' : (event, template) => {
     event.preventDefault();
 
     var section = template.$('#titleSection')[0];
@@ -70,18 +70,18 @@ Template.formsection.events({
     section.style.backgroundImage = "url('/img/" + selection + ".jpg')";
   },
 
-  "mousedown #launch": function(event, template) {
+  "mousedown #launch": (event, template) => {
     $.fn.fullpage.setAllowScrolling(false);
     Meteor.mapfunctions.search();
   },
 
-  "mousedown #location": function(event, template) {
+  "mousedown #location": (event, template) => {
     Meteor.mapfunctions.tryGeolocation(GoogleMaps.maps.foodMap.instance);
   }
 });
 
 Template.mapsection.helpers({
-  mapOptions: function() {
+  mapOptions: () => {
     if (GoogleMaps.loaded()) {
       return {
         center: new google.maps.LatLng(-34.397, 150.644),
@@ -92,22 +92,22 @@ Template.mapsection.helpers({
 });
 
 Template.mapsection.events({
-  "mousedown #reroll": function(event, template) {
+  "mousedown #reroll": (event, template) => {
     Meteor.mapfunctions.search();
   },
 
-  "mousedown #navigate": function(event, template) {
+  "mousedown #navigate": (event, template) => {
     Meteor.mapfunctions.launchMaps();
   },
 
-  "mousedown #modalClose": function(event, template) {
+  "mousedown #modalClose": (event, template) => {
     $('#modal').css('z-index', '-1');
     $('#modal').css("opacity", '0');
     $.fn.fullpage.setAllowScrolling(true);
     location.hash = "#titlePage";
   },
 
-  "mousedown #back": function(event, template) {
+  "mousedown #back": (event, template) => {
     $.fn.fullpage.setAllowScrolling(true);
     $('#modal').css('z-index', '-1');
     $('#modal').css('opacity', '0');
