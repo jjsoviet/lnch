@@ -8,6 +8,7 @@
   - [High Priority](#high-priority)
   - [Medium Priority](#medium-priority)
   - [Low Priority](#low-priority)
+- [Updates](#updates)
 
 
 ## What is it?
@@ -35,8 +36,18 @@ And since LNCH is location dependent, it is required for the user to provide it 
 ### High Priority
 - [ ] Adjusting the map view upon orientation change or window resize is still janky; the current algorithm tries to pan and zoom out the map when start and end markers get overlapped by UI elements or go out of the viewport, and it's still imperfect - see the current [calculateOffset() function](lnch-app/client/lib/maps.js) for this.
 ### Medium Priority
-- [ ] UI elements not adjusting according to mobile device orientation, must be something with the CSS media queries.
+- [x] UI elements not adjusting according to mobile device orientation, must be something with the CSS media queries.
 - [ ] Images loading on the splash page take a while to load due to resolution, causing the transition between images disconnected; may need to implement something like lazy loading.
 ### Low Priority
-- [ ] Some UI designs not fully fleshed out or look bad on mobile, such as modal popups and slide animations.
-- [ ] May need to implement image results for the selected eateries, still not sure where to place them on the viewport.
+- [x] Some UI designs not fully fleshed out or look bad on mobile, such as modal popups and slide animations.
+- [x] May need to implement image results for the selected eateries, still not sure where to place them on the viewport.
+
+
+## Updates
+### November 15, 2017
+Been a while since I've posted updates, I'll have to be more consistent in announcing new features/fixes. Anyway, as of this date I've been implementing some updates to the application. Some of those are:
+- The JavaScript files now use ES6/ES2015 syntax such as block level variables and arrow functions
+- Orientation calculation has been improved, now works more consistently for mobile devices
+- Some UI quirks like popup modals have been improved and hopefully fixed
+
+I've decided against adding another UI element, which is the image for the resulting establishment. It will take too much space in the viewport and will be especially cramped on mobile.
