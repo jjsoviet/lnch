@@ -51,3 +51,5 @@ Been a while since I've posted updates, I'll have to be more consistent in annou
 - Some UI quirks like popup modals have been improved and hopefully fixed
 
 I've decided against adding another UI element, which is the image for the resulting establishment. It will take too much space in the viewport and will be especially cramped on mobile.
+
+Orientation calculation, while improved, is still imperfect so I haven't checked the task off the list for now. Might need a complete rewrite to finally make it work. 
