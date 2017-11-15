@@ -9,6 +9,7 @@
   - [Medium Priority](#medium-priority)
   - [Low Priority](#low-priority)
 - [Updates](#updates)
+- [Try It!](#try-it)
 
 
 ## What is it?
@@ -53,3 +54,10 @@ Been a while since I've posted updates, I'll have to be more consistent in annou
 I've decided against adding another UI element, which is the image for the resulting establishment. It will take too much space in the viewport and will be especially cramped on mobile.
 
 Orientation calculation, while improved, is still imperfect so I haven't checked the task off the list for now. Might need a complete rewrite to finally make it work. 
+
+## Try It
+### If you want to try out my current build of the app (Nov. 15, 2017), then just go to this URL:
+https://lnch.herokuapp.com/
+
+It's not perfect, and hasn't been tested too frequently. If you have some suggestions/bugs, just let me know! 
+I appreciate the feedback!
