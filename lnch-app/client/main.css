@@ -136,6 +136,7 @@
 
 .info-segment, .reroll-button, .nav-button {
   background: rgba(0,0,0,1);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
   padding: 1vh 1vw;
 }
 
@@ -182,6 +183,7 @@
 
 .info-line h3, .info-line p {
   padding: 1vh 1vw;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 .info-line h3 {
@@ -267,14 +269,15 @@
 .back-button {
   position: absolute;
   right: 0;
-  top: 5vh;
+  top: 6vh;
   border: 0;
   text-decoration: none;
 }
 
 .back-button i {
-  font-size: 2em;
+  font-size: 4em;
   background: rgba(0,0,0,1);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
   color: rgb(255, 151, 13);
 }
 
@@ -331,7 +334,7 @@
 }
 
 /*Responsive*/
-@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait), only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
   .input-group h1, .select-box, .launch-button {
     font-size: 4em;
   }
@@ -375,7 +378,7 @@
 }
 
 
-@media only screen and (max-width: 768px) and (orientation: portrait), only screen and (max-width: 768px) and (orientation: landscape) {
+@media only screen and (max-width: 768px) {
   .input-group {
     bottom: 10vh;
   }
@@ -429,7 +432,7 @@
   }
 
   .back-button i {
-    font-size: 2em;
+    font-size: 3em;
   }
 
   .nav-button {
