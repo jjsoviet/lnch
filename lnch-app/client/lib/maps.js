@@ -1,29 +1,25 @@
 //Google Maps Variables
-var map;
-var directionsService;
-var directionsDisplay;
-var service;
-var currentPos;
-var currentDest;
-var circle;
-var startpin;
-var endpin;
-var navOrigin;
-var navDest;
-var navDestID;
-var start;
-var end;
-var markers = [];
-var currOrientation = "";
+let map;
+let service;
+let currentPos;
+let currentDest;
+let circle;
+let startpin;
+let endpin;
+let navOrigin;
+let navDest;
+let navDestID;
+let start;
+let end;
+let markers = [];
+let directionsService;
+let directionsDisplay;
 
 //Orientation Event Listener
 window.addEventListener('orientationchange', () => {
 
-  //Check for orientation
-  Meteor.mapfunctions.checkOrientation();
-
   //Trigger a resize event and zoom, then check for offset
-  if (currentPos != null && currOrientation != "") {
+  if (currentPos != null && Meteor.mapfunctions.checkOrientation() != "") {
     google.maps.event.trigger(map, 'resize');
     map.setCenter(currentPos);
     map.setZoom(12);
@@ -38,16 +34,19 @@ window.addEventListener('orientationchange', () => {
 Meteor.mapfunctions = {
   //Check orientation
   checkOrientation: () => {
-    var isPortrait = window.matchMedia("(orientation: portrait)");
-    currOrientation = isPortrait.matches ? "Portrait" : "Landscape";
+    let isPortrait = window.matchMedia("(orientation: portrait)");
+    return isPortrait.matches ? "Portrait" : "Landscape";
   },
 
   //Initialize Google Maps
   initMap: (mapInput) => {
     map = mapInput;
+
     directionsService = new google.maps.DirectionsService;
     directionsDisplay = new google.maps.DirectionsRenderer;
     directionsDisplay.setMap(map);
+
+    //Initialize directions service to remove markers and windows, set line color to black
     directionsDisplay.setOptions({
       suppressMarkers: true,
       suppressInfoWindows: true,
@@ -57,7 +56,6 @@ Meteor.mapfunctions = {
     //Set custom markers
     startpin = new google.maps.MarkerImage('/img/startpin.png');
     endpin = new google.maps.MarkerImage('/img/endpin.png');
-    markers = [];
 
     //Set map services
     service = new google.maps.places.PlacesService(map);
@@ -73,18 +71,18 @@ Meteor.mapfunctions = {
     if (navigator.geolocation)
         Meteor.mapfunctions.tryGeolocation(map);
     else
-        Meteor.mapfunctions.displayModal(true);
+        Meteor.mapfunctions.displayModal("Location Services Error", "Couldn't use geolocation on your device. Please enable location services and try again.");
   },
 
   //Attempt to get user location
   tryGeolocation: (map) => {
     navigator.geolocation.getCurrentPosition((position) => {
-        let pos = {
+        currentPos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
         };
 
-        currentPos = pos;
+        //Get distance value from user input
         let distance = document.getElementById('distance').value;
 
         //Set center and draw a circle around the designated radius
@@ -93,7 +91,7 @@ Meteor.mapfunctions = {
         circle.setCenter(currentPos);
         circle.setRadius(distance * 1609.34);
     }, () => {
-        Meteor.mapfunctions.displayModal(true);
+        Meteor.mapfunctions.displayModal("Geolocation Error", "Couldn't find your location. Refresh this page and try again.");
     });
   },
 
@@ -103,7 +101,7 @@ Meteor.mapfunctions = {
         Meteor.mapfunctions.clearMarker();
 
         navigator.geolocation.getCurrentPosition((position) => {
-            let pos = {
+            currentPos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
@@ -114,7 +112,7 @@ Meteor.mapfunctions = {
 
             //Build the place search request
             let request = {
-                location: pos,
+                location: currentPos,
                 radius: distance * 1609.34,
                 type: 'restaurant',
                 keyword: [category.options[category.selectedIndex].value, 'restaurant', 'eatery'],
@@ -126,7 +124,7 @@ Meteor.mapfunctions = {
             circle.setRadius(distance * 1609.34);
             service.nearbySearch(request, Meteor.mapfunctions.callback);
         }, () => {
-            Meteor.mapfunctions.displayModal(true);
+            Meteor.mapfunctions.displayModal("Search Error", "Couldn't find your location. Refresh this page and try again.");
         });
     }
   },
@@ -136,7 +134,7 @@ Meteor.mapfunctions = {
       if (markers.length > 0) {
           for (let i = 0; i < markers.length; i++)
               markers[i].setMap(null);
-          markers = new Array();
+          markers = [];
       }
   },
 
@@ -147,8 +145,11 @@ Meteor.mapfunctions = {
 
       let request = { reference: place.reference };
 
-      service.getDetails(request, (details, status) => {
-          if (details) {
+      service.getDetails(request, (result, status) => {
+        if (status !== google.maps.places.PlacesServiceStatus.OK) {
+          Meteor.mapfunctions.displayModal("Result Error", "Couldn't retrieve the search result. Refresh this page and try again.");
+        }
+          if (result) {
               //Draw start and end markers
               start = new google.maps.Marker({
                   map: map,
@@ -168,7 +169,7 @@ Meteor.mapfunctions = {
               markers.push(end);
 
               //Display the map route
-              Meteor.mapfunctions.populateData(place, details, start, end);
+              Meteor.mapfunctions.populateData(place, result, start, end);
               Meteor.mapfunctions.calculateAndDisplayRoute(place.geometry.location);
           }
       });
@@ -220,14 +221,14 @@ Meteor.mapfunctions = {
       $('.slide-info').css('margin-left', '0');
       $('.slide-down-info').css('bottom', '0');
 
+      price.innerText = "";
+      if (place.price_level != NaN && place.price_level >= 0) {
+          for (let i = 0; i < place.price_level * 1; i++)
+              price.innerText += "$";
+      }
+
       Meteor.mapfunctions.calculateOffset();
     }, 600);
-
-    price.innerText = "";
-    if (place.price_level != NaN && place.price_level >= 0) {
-        for (var i = 0; i < place.price_level * 1; i++)
-            price.innerText += "$";
-    }
   },
 
   //Display the driving route
@@ -242,7 +243,7 @@ Meteor.mapfunctions = {
           if (status === 'OK')
             directionsDisplay.setDirections(response);
           else
-            window.alert('Directions request failed due to ' + status);
+            Meteor.mapfunctions.displayModal("Directions Error", "Couldn't provide directions for this route. Refresh this page and try again.");
       });
   },
 
@@ -251,25 +252,23 @@ Meteor.mapfunctions = {
       if (status === google.maps.places.PlacesServiceStatus.OK)
           Meteor.mapfunctions.createMarker(results[Math.floor(Math.random() * results.length)]);
       else
-          Meteor.mapfunctions.displayModal(false);
+          Meteor.mapfunctions.displayModal("No Place Found", "Cannot find a place matching your parameters. Please try again.");
   },
 
   //Display a modal on search/geolocation failure
-  displayModal: (geoError) => {
+  displayModal: (...args) => {
     $('.slide-info').css('margin-left', '-30vw');
     $('.slide-down-info').css('bottom', '-30vh');
 
     $('#modal').css('z-index', '999');
     $('#modal').css('opacity', '1');
 
-    if (geoError == true) {
-      $('#modalTitle').text("Geolocation Error");
-      $('#modalDetails').text("Couldn't find your location. Refresh this page and try again.")
-    } else {
-      $('#modalTitle').text("No Place Found");
-      $('#modalDetails').text("Cannot find a place matching your parameters. Please try again.");
-      $('#modalClose').text("Retry");
+    if (args && args.length == 2) {
+      $('#modalTitle').text(args[0]);
+      $('#modalDetails').text(args[1]);
     }
+
+    $('#modalClose').text("Retry");
   },
 
   //Calculate UI offset values to shift map markers
@@ -291,7 +290,7 @@ Meteor.mapfunctions = {
     let widthPos = Math.max($('#resAddr').width(), $('#resTitle').width()) + 50;
 
     //Offset conditions for portrait and landscape mode
-    if (currOrientation == "Portrait")
+    if (Meteor.mapfunctions.checkOrientation() == "Portrait" && width <= 768)
       Meteor.mapfunctions.calculatePortraitOffset(startCoords, endCoords, infoPos, launchPos, map);
     else
       Meteor.mapfunctions.calculateLandscapeOffset(startCoords, endCoords, widthPos, width, map);
@@ -299,15 +298,15 @@ Meteor.mapfunctions = {
 
   //Portrait offset determination
   calculatePortraitOffset: (startCoords, endCoords, infoPos, launchPos, map) => {
-    var startOffset = 0;
-    var endOffset = 0;
+    let startOffset = 0;
+    let endOffset = 0;
 
     if (startCoords.y <= infoPos)
       startOffset = (startCoords.y - infoPos);
     if (endCoords.y <= infoPos)
       endOffset = (endCoords.y - infoPos);
 
-    var offset = Math.min(startOffset, endOffset);
+    let offset = Math.min(startOffset, endOffset);
 
     map.panBy(0, offset);
 
@@ -319,15 +318,15 @@ Meteor.mapfunctions = {
 
   //Landscape offset determination
   calculateLandscapeOffset: (startCoords, endCoords, widthPos, width, map) => {
-    var startOffset = 0;
-    var endOffset = 0;
+    let startOffset = 0;
+    let endOffset = 0;
 
     if (startCoords.x <= widthPos)
         startOffset = (startCoords.x - widthPos);
     if (endCoords.x <= widthPos)
         endOffset = (endCoords.x - width);
 
-    var offset = Math.min(startOffset, endOffset);
+    let offset = Math.min(startOffset, endOffset);
 
     map.panBy(offset, 0);
 
@@ -340,14 +339,16 @@ Meteor.mapfunctions = {
   //Convert marker positions to actual pixel values
   convertToPoint: (marker) => {
     map = GoogleMaps.maps.foodMap.instance;
-    var scale = Math.pow(2, map.getZoom());
-    var nw = new google.maps.LatLng(
+
+    let scale = Math.pow(2, map.getZoom());
+    let nw = new google.maps.LatLng(
         map.getBounds().getNorthEast().lat(),
         map.getBounds().getSouthWest().lng()
     );
-    var worldCoordinateNW = map.getProjection().fromLatLngToPoint(nw);
-    var worldCoordinate = map.getProjection().fromLatLngToPoint(marker.getPosition());
-    var pixelOffset = new google.maps.Point(
+
+    let worldCoordinateNW = map.getProjection().fromLatLngToPoint(nw);
+    let worldCoordinate = map.getProjection().fromLatLngToPoint(marker.getPosition());
+    let pixelOffset = new google.maps.Point(
         Math.floor((worldCoordinate.x - worldCoordinateNW.x) * scale),
         Math.floor((worldCoordinate.y - worldCoordinateNW.y) * scale)
     );
@@ -357,13 +358,13 @@ Meteor.mapfunctions = {
 
   //Launch an external Google Maps navigation instance
   launchMaps: () => {
-    var baseURL = "https://www.google.com/maps/dir/?api=1";
-    var originURL = "&origin=" + navOrigin;
-    var destURL = "&destination=" + navDest + "&destination_place_id=" + navDestID;
-    var actionsURL = "&travelmode=driving";
-    var fullURL = baseURL + originURL + destURL + actionsURL;
+    let baseURL = "https://www.google.com/maps/dir/?api=1";
+    let originURL = "&origin=" + navOrigin;
+    let destURL = "&destination=" + navDest + "&destination_place_id=" + navDestID;
+    let actionsURL = "&travelmode=driving";
+    let fullURL = baseURL + originURL + destURL + actionsURL;
 
-    var tab = window.open(fullURL, '_blank');
+    let tab = window.open(fullURL, '_blank');
     tab.focus();
   }
 };

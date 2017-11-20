@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
+import { Reactivelet } from 'meteor/reactive-var';
 import './lib/maps.js';
 import './main.html';
 
@@ -63,9 +63,9 @@ Template.formsection.events({
   'change #category' : (event, template) => {
     event.preventDefault();
 
-    var section = template.$('#titleSection')[0];
-    var selector = template.$('#category')[0];
-    var selection = selector.options[selector.selectedIndex].text;
+    let section = template.$('#titleSection')[0];
+    let selector = template.$('#category')[0];
+    let selection = selector.options[selector.selectedIndex].text;
 
     section.style.backgroundImage = "url('/img/" + selection + ".jpg')";
   },
