@@ -236,10 +236,9 @@ body * {
   color: rgba(0,0,0,1);
   background: rgb(255, 151, 13);
   right: 50vw;
-  max-width: 10vw;
-  max-height: 10vh;
+  max-width: 250px;
+  max-height: 200px;
   font-size: 4em;
-  padding: 1vh 3vw;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -366,7 +365,7 @@ body * {
 
   .nav-button {
     font-size: 2.5em;
-    max-width: 15vw;
+    max-width: 200px;
   }
 
   .modal-window {
@@ -421,14 +420,14 @@ body * {
     flex-wrap: wrap;
   }
 
-  .info-segment, .reroll-button, .nav-button {
-    padding: 0.5vh 1.5vw;
+  .info-segment, .reroll-button {
+    padding: 10px 15px;
   }
 
   .reroll-button {
     font-size: 2em;
-    max-width: 30vw;
-    padding: 1vh 5vw;
+    min-width: 100px;
+    max-width: 100px;
     left: 0;
   }
 
@@ -442,9 +441,10 @@ body * {
 
   .nav-button {
     font-size: 2.6em;
-    max-height: 15vh;
-    max-width: 30vw;
-    padding: 1vh 10vw;
+    max-height: 150px;
+    min-width: 100px;
+    max-width: 170px;
+    padding: 10px 20px;
   }
 
   .modal-window {
