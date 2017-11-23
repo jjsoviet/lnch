@@ -15,10 +15,13 @@ if (Meteor.isClient) {
         setTimeout(() => {
           $('#fullpage').fullpage({
               anchors: ['titlePage', 'mapPage'],
-              navigation: true,
+              navigation: false,
               navigationPosition: 'right',
               scrollingSpeed: 400
           });
+
+          $.fn.fullpage.setMouseWheelScrolling(false);
+          $.fn.fullpage.setAllowScrolling(false);
         }, 0);
     });
 
