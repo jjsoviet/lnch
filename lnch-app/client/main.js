@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Reactivelet } from 'meteor/reactive-var';
 import './lib/maps.js';
@@ -6,17 +7,32 @@ import './main.html';
 //API Key
 //AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo
 
-//Load Maps API
-Meteor.startup(() => {
-  //Load the Google Maps instance
-  GoogleMaps.load({ v: '3', key: 'AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo', libraries: 'geometry,places' });
+//Load on Meteor App Start
+if (Meteor.isClient) {
+  Meteor.startup(() => {
+    //Initialize Fullpage JS
+    $(document).ready(() => {
+        setTimeout(() => {
+          $('#fullpage').fullpage({
+              anchors: ['titlePage', 'mapPage'],
+              navigation: true,
+              navigationPosition: 'right',
+              scrollingSpeed: 400
+          });
+        }, 0);
+    });
 
-  //Default to the Title section on Refresh
-  location.hash = "#titlePage";
+    //Load the Google Maps instance
+    GoogleMaps.load({ v: '3', key: 'AIzaSyAGLwBMoMdTphOdniyoL-YTBACYc01BwNo', libraries: 'geometry,places' });
 
-  //Query for orientation
-  Meteor.mapfunctions.checkOrientation();
-});
+    //Default to the Title section on Refresh
+    location.hash = "#titlePage";
+
+    //Query for orientation
+    Meteor.mapfunctions.checkOrientation();
+  });
+}
+
 
 //Template Helpers
 Template.formsection.helpers({
@@ -55,10 +71,6 @@ Template.formsection.onCreated(() => {
   })
 });
 
-Template.formsection.onRendered = () => {
-    $.fn.fullpage.setAllowScrolling(false);
-}
-
 Template.formsection.events({
   'change #category' : (event, template) => {
     event.preventDefault();
@@ -71,7 +83,6 @@ Template.formsection.events({
   },
 
   "mousedown #launch": (event, template) => {
-    $.fn.fullpage.setAllowScrolling(false);
     Meteor.mapfunctions.search();
   },
 
@@ -103,12 +114,10 @@ Template.mapsection.events({
   "mousedown #modalClose": (event, template) => {
     $('#modal').css('z-index', '-1');
     $('#modal').css("opacity", '0');
-    $.fn.fullpage.setAllowScrolling(true);
     location.hash = "#titlePage";
   },
 
   "mousedown #back": (event, template) => {
-    $.fn.fullpage.setAllowScrolling(true);
     $('#modal').css('z-index', '-1');
     $('#modal').css('opacity', '0');
   }

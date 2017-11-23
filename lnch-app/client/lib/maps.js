@@ -68,31 +68,8 @@ Meteor.mapfunctions = {
     });
 
     //Try HTML5 geolocation
-    if (navigator.geolocation)
-        Meteor.mapfunctions.tryGeolocation(map);
-    else
+    if (!navigator.geolocation)
         Meteor.mapfunctions.displayModal("Location Services Error", "Couldn't use geolocation on your device. Please enable location services and try again.");
-  },
-
-  //Attempt to get user location
-  tryGeolocation: (map) => {
-    navigator.geolocation.getCurrentPosition((position) => {
-        currentPos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-        };
-
-        //Get distance value from user input
-        let distance = document.getElementById('distance').value;
-
-        //Set center and draw a circle around the designated radius
-        map.setCenter(new google.maps.LatLng(currentPos));
-        circle.setMap(map);
-        circle.setCenter(currentPos);
-        circle.setRadius(distance * 1609.34);
-    }, () => {
-        Meteor.mapfunctions.displayModal("Geolocation Error", "Couldn't find your location. Refresh this page and try again.");
-    });
   },
 
   //Initiate search of destination
@@ -106,9 +83,16 @@ Meteor.mapfunctions = {
                 lng: position.coords.longitude
             };
 
+            //Get distance, category and region values from user input
             let distance = document.getElementById('distance').value;
             let category = document.getElementById('category');
             let region = document.getElementById('region');
+
+            //Set center and draw a circle around the designated radius
+            map.setCenter(new google.maps.LatLng(currentPos));
+            circle.setMap(map);
+            circle.setCenter(currentPos);
+            circle.setRadius(distance * 1609.34);
 
             //Build the place search request
             let request = {
